@@ -1,6 +1,7 @@
 package view;
 
 import model.*;
+import com.formdev.flatlaf.*;
 import javax.swing.*;
 
 public class Main extends MFrame
@@ -21,7 +22,11 @@ public class Main extends MFrame
 	public static void main(String... args)
 	{
 		SwingUtilities.invokeLater(
-			() -> new Main()
+			() -> {
+				FlatLightLaf.setup();
+
+				new Main();
+			}
 		);
 	}
 }
