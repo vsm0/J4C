@@ -11,6 +11,8 @@ public class Home extends JPanel
 	{
 		super();
 
+		frame.setTitle("Home");
+
 		setLayout(
 			new MigLayout("fill")
 		);
@@ -23,17 +25,23 @@ public class Home extends JPanel
 		);
 		add(header, "north, wrap");
 		
-		var menuButton = new JButton("•••");
+		var menuButton = new JButton(
+			new SvgIcon("bars")
+		);
 		header.add(menuButton);
 
 		var logoLabel = new JLabel("Tech4C");
 		header.add(logoLabel, "push");
 
-		var loginButton = new JButton("Login");
+		var loginButton = new JButton(
+			new SvgIcon("user")
+		);
 		header.add(loginButton);
 
 		// TODO: dynamic cart item count
-		var cartButton = new JButton("Cart (0)");
+		var cartButton = new JButton(
+			new SvgIcon("cart-shopping")
+		);
 		header.add(cartButton, "alignx right, wrap");
 
 		// SEARCHBAR
@@ -47,7 +55,9 @@ public class Home extends JPanel
 		var searchField = new JTextField();
 		searchBar.add(searchField, "growx, pushx");
 
-		var searchButton = new JButton("Search");
+		var searchButton = new JButton(
+			new SvgIcon("magnifying-glass")
+		);
 		searchBar.add(searchButton);
 
 		// BODY
