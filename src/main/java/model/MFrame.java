@@ -8,15 +8,17 @@ public class MFrame extends JFrame
 	{
 		super(title);
 
-		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
 	public void display()
 	{
+		// must be called after setSize() or pack()
+		setLocationRelativeTo(null);
+
 		toFront();
 		requestFocus();
-		setVisible();
+		setVisible(true);
 	}
 
 	public void refresh()
