@@ -44,6 +44,7 @@ public class Home extends JPanel
 		var cartButton = new JButton(
 			new SvgIcon("cart-shopping")
 		);
+		cartButton.setText("0");
 		header.add(cartButton, "alignx right, wrap");
 
 		// SEARCHBAR
