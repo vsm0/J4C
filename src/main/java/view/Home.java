@@ -13,6 +13,8 @@ public class Home extends JPanel
 
 		frame.setTitle("Home");
 
+		SvgIcon.setDefaultTheme("dark");
+
 		setLayout(
 			new MigLayout("fill")
 		);
