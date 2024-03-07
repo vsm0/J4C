@@ -19,7 +19,7 @@ public class Home extends JPanel
 
 		var header = new JPanel();
 		header.setLayout(
-			new MigLayout()
+			new MigLayout("fill")
 		);
 		add(header, "north");
 		
@@ -27,14 +27,14 @@ public class Home extends JPanel
 		header.add(menuButton);
 
 		var logoLabel = new JLabel("Tech4C");
-		header.add(logoLabel);
+		header.add(logoLabel, "push");
 
 		var loginButton = new JButton("Login");
 		header.add(loginButton);
 
 		// TODO: dynamic cart item count
 		var cartButton = new JButton("Cart (0)");
-		header.add(cartButton);
+		header.add(cartButton, "alignx right");
 
 		// HEADER END
 		// BODY START
