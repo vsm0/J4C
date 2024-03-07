@@ -19,24 +19,39 @@ public class Home extends JPanel
 
 		var header = new JPanel();
 		header.setLayout(
-			new MigLayout("fill")
+			new MigLayout("debug, fill")
 		);
-		add(header, "north");
+		add(header, "north, wrap");
 		
 		var menuButton = new JButton("•••");
 		header.add(menuButton);
 
 		var logoLabel = new JLabel("Tech4C");
-		header.add(logoLabel, "push");
+		header.add(logoLabel, "push, gapleft unrel");
 
 		var loginButton = new JButton("Login");
 		header.add(loginButton);
 
 		// TODO: dynamic cart item count
 		var cartButton = new JButton("Cart (0)");
-		header.add(cartButton, "alignx right");
+		header.add(cartButton, "alignx right, wrap");
 
 		// HEADER END
+		// SEARCHBAR START
+
+		var searchBar = new JPanel();
+		searchBar.setLayout(
+			new MigLayout("debug")
+		);
+		add(searchBar, "north");
+
+		var searchField = new JTextField();
+		searchBar.add(searchField, "growx, pushx");
+
+		var searchButton = new JButton("Search");
+		searchBar.add(searchButton);
+
+		// SEARCHBAR END
 		// BODY START
 
 		var body = new JPanel();
