@@ -15,11 +15,11 @@ public class Home extends JPanel
 			new MigLayout("fill")
 		);
 
-		// HEADER START
+		// HEADER
 
 		var header = new JPanel();
 		header.setLayout(
-			new MigLayout("debug, fill")
+			new MigLayout("fill")
 		);
 		add(header, "north, wrap");
 		
@@ -27,7 +27,7 @@ public class Home extends JPanel
 		header.add(menuButton);
 
 		var logoLabel = new JLabel("Tech4C");
-		header.add(logoLabel, "push, gapleft unrel");
+		header.add(logoLabel, "push");
 
 		var loginButton = new JButton("Login");
 		header.add(loginButton);
@@ -36,12 +36,11 @@ public class Home extends JPanel
 		var cartButton = new JButton("Cart (0)");
 		header.add(cartButton, "alignx right, wrap");
 
-		// HEADER END
-		// SEARCHBAR START
+		// SEARCHBAR
 
 		var searchBar = new JPanel();
 		searchBar.setLayout(
-			new MigLayout("debug")
+			new MigLayout()
 		);
 		add(searchBar, "north");
 
@@ -51,8 +50,7 @@ public class Home extends JPanel
 		var searchButton = new JButton("Search");
 		searchBar.add(searchButton);
 
-		// SEARCHBAR END
-		// BODY START
+		// BODY
 
 		var body = new JPanel();
 		body.setLayout(
@@ -62,7 +60,6 @@ public class Home extends JPanel
 			new JScrollPane(body),
 			"center, grow"
 		);
-		// BODY END
 	}
 }
 
