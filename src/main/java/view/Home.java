@@ -86,6 +86,12 @@ public class Home extends JPanel
 		);
 		body.add(banner, "growx, wrap");
 
+		var bgImage = new IconLabel(
+			banner,
+			"gfx/jpg/test.jpg"
+		);
+		banner.add(bgImage, "pos 0 0");
+
 		var quote = new Paragraph(
 			banner,
 			Paragraph.CENTER,
