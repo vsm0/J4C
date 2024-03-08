@@ -14,8 +14,6 @@ public class Home extends JPanel
 
 		frame.setTitle("Home");
 
-		SvgIcon.setDefaultTheme("dark");
-
 		setLayout(
 			new MigLayout("fill")
 		);
@@ -46,18 +44,18 @@ public class Home extends JPanel
 			new SvgIcon("cart-shopping")
 		);
 		cartButton.setText("0");
-		header.add(cartButton, "alignx right, wrap");
+		header.add(cartButton, "wrap");
 
 		// SEARCHBAR
 
 		var searchBar = new JPanel();
 		searchBar.setLayout(
-			new MigLayout()
+			new MigLayout("fill")
 		);
-		add(searchBar, "north");
+		add(searchBar, "north, wrap");
 
 		var searchField = new JTextField();
-		searchBar.add(searchField, "growx, pushx");
+		searchBar.add(searchField, "growx, push");
 
 		var searchButton = new JButton(
 			new SvgIcon("magnifying-glass")
@@ -69,23 +67,48 @@ public class Home extends JPanel
 		var body = new ScrollablePanel();
 		body.setScrollableWidth(ScrollablePanel.ScrollableSizeHint.FIT);
 		body.setScrollableHeight(ScrollablePanel.ScrollableSizeHint.STRETCH);
+		body.setLayout(
+			new MigLayout("fill")
+		);
 		add(
 			new JScrollPane(body),
-			"center, grow"
+			"grow"
 		);
 
-		// need to add before setLayout if using DynamicGridLayout
-		for (int i = 0; i < 40; ++i)
-			body.add(
-				new JLabel("Example " + i)
-			);
+		var banner = new JPanel();
+		banner.setLayout(
+			new MigLayout(
+				"debug, fill"
+			)
+		);
+		body.add(banner, "growx, wrap");
 
-		var bodyLayout = new DynamicGridLayout(frame, body);
-		bodyLayout.constrain(3);
-		bodyLayout.resize();
+		var quote = new Paragraph(
+			banner,
+			Paragraph.CENTER,
+			"Shop here. Now."
+		);
+		banner.add(quote, "growx, wrap");
 
-		body.setLayout(bodyLayout);
+		var subquote = new Paragraph(
+			banner,
+			Paragraph.CENTER,
+			"Tech4C is the world's #1 gadget retail service, bringing you the best value for the best price since 2024."
+		);
+		banner.add(subquote, "growx, wrap");
 
+		var tip = new Paragraph(
+			banner,
+			Paragraph.CENTER,
+			"Please sign-in for the best experience."
+		);
+		banner.add(tip, "growx, wrap");
+
+		var loginButton2 = new JButton("Login");
+		banner.add(loginButton2, "al center, split 2");
+
+		var registerButton = new JButton("Register");
+		banner.add(registerButton);
 	}
 }
 
