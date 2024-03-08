@@ -1,6 +1,7 @@
 package view;
 
 import model.*;
+import vendor.model.*;
 import net.miginfocom.swing.*;
 import java.awt.*;
 import javax.swing.*;
@@ -65,14 +66,26 @@ public class Home extends JPanel
 
 		// BODY
 
-		var body = new JPanel();
-		body.setLayout(
-			new MigLayout()
-		);
+		var body = new ScrollablePanel();
+		body.setScrollableWidth(ScrollablePanel.ScrollableSizeHint.FIT);
+		body.setScrollableHeight(ScrollablePanel.ScrollableSizeHint.STRETCH);
 		add(
 			new JScrollPane(body),
 			"center, grow"
 		);
+
+		// need to add before setLayout if using DynamicGridLayout
+		for (int i = 0; i < 40; ++i)
+			body.add(
+				new JLabel("Example " + i)
+			);
+
+		var bodyLayout = new DynamicGridLayout(frame, body);
+		bodyLayout.constrain(3);
+		bodyLayout.resize();
+
+		body.setLayout(bodyLayout);
+
 	}
 }
 

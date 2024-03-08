@@ -4,18 +4,19 @@ import javax.swing.*;
 
 public class MFrame extends JFrame
 {
-	public MFrame(String title)
+	public MFrame(String title, int w, int h)
 	{
 		super(title);
 
+		// here to allow dynamic layout checks
+		setSize(w, h);
+		// must be called after setSize() or pack()
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
 	public void display()
 	{
-		// must be called after setSize() or pack()
-		setLocationRelativeTo(null);
-
 		toFront();
 		requestFocus();
 		setVisible(true);

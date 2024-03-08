@@ -8,13 +8,11 @@ public class Main extends MFrame
 {
 	public Main()
 	{
-		super("Main");
+		super("Main", 480, 512);
 
 		setContent(
 			new Home(this)
 		);
-
-		setSize(640, 480);
 
 		display();
 	}
