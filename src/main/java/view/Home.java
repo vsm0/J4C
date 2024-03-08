@@ -32,6 +32,9 @@ public class Home extends JPanel
 		header.add(menuButton);
 
 		var logoLabel = new JLabel("Tech4C");
+		logoLabel.setFont(
+			new Font("Serif", Font.BOLD, 20)
+		);
 		header.add(logoLabel, "push");
 
 		var loginButton = new JButton(
@@ -78,7 +81,7 @@ public class Home extends JPanel
 		var banner = new JPanel();
 		banner.setLayout(
 			new MigLayout(
-				"debug, fill"
+				"fill"
 			)
 		);
 		body.add(banner, "growx, wrap");
@@ -88,6 +91,9 @@ public class Home extends JPanel
 			Paragraph.CENTER,
 			"Shop here. Now."
 		);
+		quote.setFont(
+			new Font("Serif", Font.BOLD, 22)
+		);
 		banner.add(quote, "growx, wrap");
 
 		var subquote = new Paragraph(
@@ -95,12 +101,18 @@ public class Home extends JPanel
 			Paragraph.CENTER,
 			"Tech4C is the world's #1 gadget retail service, bringing you the best value for the best price since 2024."
 		);
-		banner.add(subquote, "growx, wrap");
+		subquote.setFont(
+			new Font("Serif", Font.PLAIN, 16)
+		);
+		banner.add(subquote, "growx, wrap, gapy 50");
 
 		var tip = new Paragraph(
 			banner,
 			Paragraph.CENTER,
 			"Please sign-in for the best experience."
+		);
+		tip.setFont(
+			new Font("Serif", Font.ITALIC, 10)
 		);
 		banner.add(tip, "growx, wrap");
 
