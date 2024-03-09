@@ -5,14 +5,44 @@ import vendor.model.*;
 import net.miginfocom.swing.*;
 import java.awt.*;
 import javax.swing.*;
+import java.util.concurrent.*;
 
 public class Home extends JPanel
 {
-	public Home(MFrame frame)
+	private static MFrame frame;
+
+	public static void queue(MFrame _frame)
+	{
+		frame = _frame;
+
+		new SwingWorker<Home, Void>()
+                {
+                        public Home doInBackground()
+                        {
+                                return new Home();
+                        }
+
+                        public void done()
+                        {
+				try
+				{
+                        		var nextPage = get();
+                        	        frame.setContent(nextPage);
+				}
+				catch (InterruptedException e)
+				{
+				}
+				catch (ExecutionException e)
+				{
+				}
+                        }
+                }
+		.execute();
+	}
+
+	public Home()
 	{
 		super();
-
-		frame.setTitle("Home");
 
 		setLayout(
 			new MigLayout("fill")
@@ -86,12 +116,6 @@ public class Home extends JPanel
 		);
 		body.add(banner, "growx, wrap");
 
-		var bgImage = new IconLabel(
-			banner,
-			"gfx/jpg/test.jpg"
-		);
-		banner.add(bgImage, "pos 0 0");
-
 		var quote = new Paragraph(
 			banner,
 			Paragraph.CENTER,
@@ -127,6 +151,8 @@ public class Home extends JPanel
 
 		var registerButton = new JButton("Register");
 		banner.add(registerButton);
+
+		frame.setTitle("Home");
 	}
 }
 

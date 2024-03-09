@@ -1,5 +1,6 @@
 package model;
 
+import controller.*;
 import java.awt.*;
 import java.awt.image.*;
 import javax.swing.*;
@@ -7,13 +8,6 @@ import javax.imageio.*;
 
 public class ScaledIcon extends ImageIcon
 {
-	public enum ScaleMode
-	{
-		FIT,
-		EXPAND,
-		STRETCH
-	};
-
 	public enum ScaleType
 	{
 		FAST(Image.SCALE_FAST),
@@ -27,72 +21,64 @@ public class ScaledIcon extends ImageIcon
 		}
 	};
 
-	BufferedImage image;
+	private BufferedImage image;
 
-	public ScaledIcon(String path)
+	public ScaledIcon(String path) throws Exception
 	{
-		super(path);
+		super();
 
-		try
-		{
-			image = ImageIO.read(
-				getClass()
-				.getClassLoader()
-				.getResource(path)
-			);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
+		image = ImageIO.read(
+			getClass()
+			.getClassLoader()
+			.getResource(path)
+		);
 	}
 
 	public ImageIcon getScaled(int w, int h)
 	{
-		return getScaled(w, h, ScaleMode.FIT, ScaleType.SMOOTH);
-	}
-
-	public ImageIcon getScaled(int w, int h, ScaleMode mode, ScaleType type)
-	{
-		var res = getResolution(w, h, mode);
-
-		return new ImageIcon(
-			image.getScaledInstance(
-				res.width,
-				res.height,
-				type.type
-			)
+		return getScaled(
+			w,
+			h,
+			ImageScaler.ScaleMode.FIT,
+			ScaleType.FAST
 		);
 	}
 
-	private Dimension getResolution(int w, int h, ScaleMode mode)
+	public ImageIcon getScaled(
+		int w,
+		int h,
+		ImageScaler.ScaleMode mode,
+		ScaleType type
+	)
 	{
-		var width = image.getWidth();
-		var height = image.getHeight();
+		var res = ImageScaler.scale(
+			image.getWidth(),
+			image.getHeight(),
+			w,
+			h,
+			mode
+		);
 
-		var wr = (double) w / width;
-		var hr = (double) h / height;
+		var newImage = new BufferedImage(
+			res.width,
+			res.height,
+			BufferedImage.TYPE_INT_RGB
+		);
 
-		switch (mode) {
-			case FIT -> {
-				wr = Math.min(wr, hr);
-				hr = wr;
-			}
-			case EXPAND -> {
-				wr = Math.max(wr, hr);
-				hr = wr;
-			}
-			default -> {
-				width = w;
-				height = h;
+		var graphics = newImage.createGraphics();
 
-			}
-		};
+		graphics.drawImage(
+			image,
+			0,
+			0,
+			res.width,
+			res.height,
+			null
+		);
 
-		width = (int) ((double) width * wr);
-		height = (int) ((double) height * hr);
-		
-		return new Dimension(width, height);
+		graphics.dispose();
+
+		return new ImageIcon(newImage);
 	}
 }
 
