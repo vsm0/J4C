@@ -11,7 +11,7 @@ public class Home extends JPanel
 {
 	private static MFrame frame;
 
-	public Home()
+	private Home()
 	{
 		super();
 
@@ -55,8 +55,10 @@ public class Home extends JPanel
                         {
 				try
 				{
-                        		var nextPage = get();
-                        	        frame.setContent(nextPage);
+                        		var page = get();
+                        	        frame.setContent(page);
+					frame.refresh();
+					Load.stop();
 				}
 				catch (InterruptedException e)
 				{

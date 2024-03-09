@@ -1,6 +1,7 @@
 package model;
 
 import javax.swing.*;
+import javax.imageio.*;
 
 public class Img extends JLabel
 {
@@ -15,10 +16,12 @@ public class Img extends JLabel
 
 		try
 		{
-			setIcon(
-				new ScaledIcon(path)
-				.getScaled(w, h)
-			);
+			var icon = new ScaledIcon(path)
+					.getScaled(w, h);
+
+			icon.setImageObserver(this);
+
+			setIcon(icon);
 		}
 		catch (Exception e)
 		{

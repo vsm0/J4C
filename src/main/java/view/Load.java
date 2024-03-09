@@ -6,14 +6,31 @@ import javax.swing.*;
 
 public class Load extends JPanel
 {
-	public static void start(MFrame frame)
+	private static MFrame frame;
+
+	public static void start(MFrame _frame)
 	{
+		frame = _frame;
 		var content = new Load(frame);
-		frame.setContent(content);
+		frame.setContent(content, 2);
+		frame.refresh();
 		frame.display();
 	}
 
-	public Load(MFrame frame)
+	public static void stop()
+	{
+		var timer = new Timer(
+			512,
+			e -> {
+				frame.removeContent(2);
+				frame.refresh();
+			}
+		);
+		timer.setRepeats(false);
+		timer.start();
+	}
+
+	private Load(MFrame frame)
 	{
 		super();
 
@@ -21,17 +38,16 @@ public class Load extends JPanel
 			new MigLayout("al center center")
 		);
 
-		var icon = new ImageIcon(
-			getClass()
-			.getClassLoader()
-			.getResource(
-				"gfx/gif/ajax-loader.gif"
-			)
+		add(
+			new Img(
+			//	"gfx/gif/preloader.gif",
+				"gfx/gif/ajax-loader.gif",
+				"...",
+				80,
+				80
+			),
+			"wrap"
 		);
-
-		var spinner = new JLabel(icon);
-		icon.setImageObserver(spinner);
-		add(spinner, "wrap");
 
 		add(
 			new JLabel(

@@ -32,6 +32,8 @@ public class ScaledIcon extends ImageIcon
 			.getClassLoader()
 			.getResource(path)
 		);
+
+		setImage(image);
 	}
 
 	public ImageIcon getScaled(int w, int h)
