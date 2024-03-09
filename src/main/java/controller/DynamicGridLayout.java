@@ -1,5 +1,6 @@
-package model;
+package controller;
 
+import model.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -18,8 +19,6 @@ public class DynamicGridLayout extends GridLayout
 		this.frame = frame;
 		this.panel = panel;
 
-		assert panel.getComponents().length > 0 : "Panel can't be empty!";
-
 		panel.addComponentListener(
 			new ComponentAdapter()
 			{
@@ -36,7 +35,7 @@ public class DynamicGridLayout extends GridLayout
 		this.maxColumns = maxColumns;
 	}
 
-	public void resize()
+	private void resize()
 	{
 		panel.setLayout(
 			new GridLayout(0, getColumnCount())
@@ -45,11 +44,11 @@ public class DynamicGridLayout extends GridLayout
 	
 	private int getColumnCount()
 	{
-		var frameWidth = frame.getSize().width;
+		var frameWidth = frame.getWidth();
 		var panelWidth = 0;
 
 		for (Component c : panel.getComponents())
-			panelWidth = Math.max(panelWidth, c.getPreferredSize().width);
+			panelWidth = Math.max(panelWidth, c.getWidth());
 		
 		if (panelWidth == 0 || frameWidth < panelWidth)
 			return 1;
