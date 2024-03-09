@@ -28,6 +28,11 @@ public class Paragraph extends JTextPane
 	{
 		setText(s);
 		setEditable(false);
+		setHighlighter(null);
+		// Ugly LAF
+		// setEnabled(false);
+		// NullPointerException on Tab then Ctrl+A
+		// getCaret().deinstall(this);
 		setBackground(
 			parent.getBackground()
 		);
