@@ -22,6 +22,7 @@ public class Gif extends JLabel
 				.getResource(path)
 			);
 
+			icon.setImageObserver(this);
 			setIcon(icon);
 		}
 		catch (Exception e)
