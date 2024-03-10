@@ -7,6 +7,8 @@ import javax.swing.*;
 
 public class NavMenu extends JPanel
 {
+	private static int counter = 0;
+
 	public NavMenu(MFrame frame)
 	{
 		super();
@@ -35,14 +37,14 @@ public class NavMenu extends JPanel
 		var cartButton = new JButton(
 			new SvgIcon("cart-shopping")
 		);
-		cartButton.setText("0");
+		cartButton.setText(
+			String.valueOf(counter)
+		);
 		cartButton.addActionListener(
-			e -> {
-				Load.queue(
-					frame,
-					Cart.queue(frame)
-				);
-			}
+			e -> Load.queue(
+				frame,
+				Cart.queue(frame)
+			)
 		);
 		add(cartButton, "wrap");
 	}

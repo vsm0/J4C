@@ -45,7 +45,7 @@ public class Load extends JPanel
 		);
 	}
 
-	public static void stop(MFrame frame)
+	private static void stop(MFrame frame)
 	{
 		var timer = new Timer(
 			250,

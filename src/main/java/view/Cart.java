@@ -19,6 +19,9 @@ public class Cart extends JPanel
 		var header = new NavMenu(frame);
 		add(header, "north, wrap");
 
+		var subhead = new CartNav(frame);
+		add(subhead, "north, wrap");
+
 		frame.setTitle("Cart");
 	}
 
