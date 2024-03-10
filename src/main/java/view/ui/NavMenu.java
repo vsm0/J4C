@@ -1,12 +1,13 @@
 package view.ui;
 
 import model.*;
+import view.*;
 import net.miginfocom.swing.*;
 import javax.swing.*;
 
 public class NavMenu extends JPanel
 {
-	public NavMenu()
+	public NavMenu(MFrame frame)
 	{
 		super();
 
@@ -35,6 +36,14 @@ public class NavMenu extends JPanel
 			new SvgIcon("cart-shopping")
 		);
 		cartButton.setText("0");
+		cartButton.addActionListener(
+			e -> {
+				Load.queue(
+					frame,
+					Cart.queue(frame)
+				);
+			}
+		);
 		add(cartButton, "wrap");
 	}
 }

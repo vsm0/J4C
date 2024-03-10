@@ -8,9 +8,7 @@ import javax.swing.*;
 
 public class Home extends JPanel
 {
-	private static MFrame frame;
-
-	private Home()
+	private Home(MFrame frame)
 	{
 		super();
 
@@ -18,7 +16,7 @@ public class Home extends JPanel
 			new MigLayout("fill")
 		);
 
-		var header = new NavMenu();
+		var header = new NavMenu(frame);
 		add(header, "north, wrap");
 
 		var searchBar = new SearchBar();
@@ -39,16 +37,12 @@ public class Home extends JPanel
 		frame.setTitle("Home");
 	}
 
-	public static void queue(MFrame _frame)
+	public static Runnable queue(MFrame frame)
 	{
-		frame = _frame;
-
-		PageLoader.invokeLater(
-			() -> {
-				var page = new Home();
-				PageLoader.start(page, frame, 0);
-			}
-		);
+		return () -> {
+			var page = new Home(frame);
+			PageLoader.start(page, frame, 0);
+		};
 	}
 }
 

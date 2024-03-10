@@ -7,9 +7,7 @@ import javax.swing.*;
 
 public class Load extends JPanel
 {
-	private static MFrame frame;
-
-	private Load()
+	private Load(MFrame frame)
 	{
 		super();
 
@@ -29,24 +27,28 @@ public class Load extends JPanel
 		frame.setTitle("Loading");
 	}
 
-	public static void queue(MFrame _frame)
+	public static void queue(MFrame frame, Runnable runner)
 	{
-		frame = _frame;
-
 		PageLoader.invokeLater(
 			() -> {
-				var page = new Load();
+				var page = new Load(frame);
 				frame.setContent(page, 2);
 				frame.refresh();
 				frame.display();
+			},
+			() -> {
+				PageLoader.invokeLater(
+					runner,
+					() -> stop(frame)
+				);
 			}
 		);
 	}
 
-	public static void stop()
+	public static void stop(MFrame frame)
 	{
 		var timer = new Timer(
-			512,
+			250,
 			e -> {
 				frame.removeContent(2);
 		

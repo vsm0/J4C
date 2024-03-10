@@ -8,9 +8,7 @@ import javax.swing.*;
 
 public class Cart extends JPanel
 {
-	private static MFrame frame;
-
-	private Cart()
+	private Cart(MFrame frame)
 	{
 		super();
 
@@ -18,22 +16,18 @@ public class Cart extends JPanel
 			new MigLayout("fill")
 		);
 
-		var header = new NavMenu();
+		var header = new NavMenu(frame);
 		add(header, "north, wrap");
 
 		frame.setTitle("Cart");
 	}
 
-	public static void queue(MFrame _frame)
+	public static Runnable queue(MFrame frame)
 	{
-		_frame = frame;
-
-		PageLoader.invokeLater(
-			() -> {
-				var page = new Cart();
-				PageLoader.start(page, frame, 0);
-			}
-		);
+		return () -> {
+			var page = new Cart(frame);
+			PageLoader.start(page, frame, 0);
+		};
 	}
 }
 

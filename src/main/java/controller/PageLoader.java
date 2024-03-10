@@ -7,14 +7,27 @@ import javax.swing.*;
 
 public class PageLoader
 {
-	public static void invokeLater(Runnable runner)
+	public static void invokeLater(Runnable during)
+	{
+		invokeLater(
+			during,
+			() -> {}
+		);
+	}
+
+	public static void invokeLater(Runnable during, Runnable after)
 	{
 		new SwingWorker<Void, Void>()
 		{
 			public Void doInBackground()
 			{
-				runner.run();
+				during.run();
 				return null;
+			}
+
+			public void done()
+			{
+				after.run();
 			}
 		}
 		.execute();
@@ -26,7 +39,6 @@ public class PageLoader
 		ContainerRemote.disable(container);
 		frame.setContent(container, layer);
 		frame.refresh();
-		Load.stop();
 	}
 }
 

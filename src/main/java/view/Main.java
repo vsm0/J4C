@@ -10,9 +10,10 @@ public class Main extends MFrame
 	{
 		super("Main", 480, 512);
 
-		Load.queue(this);
-
-		Home.queue(this);
+		Load.queue(
+			this,
+			Home.queue(this)
+		);
 	}
 
 	public static void main(String... args)
