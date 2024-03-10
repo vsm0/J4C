@@ -1,8 +1,10 @@
 package view;
 
 import model.*;
+import controller.*;
 import net.miginfocom.swing.*;
 import javax.swing.*;
+import javax.imageio.*;
 
 public class Load extends JPanel
 {
@@ -23,6 +25,15 @@ public class Load extends JPanel
 			512,
 			e -> {
 				frame.removeContent(2);
+		
+				var c0 = frame.getContent(0);
+				if (c0 != null)
+					ContainerRemote.enable(c0);
+
+				var c1 = frame.getContent(1);
+				if (c1 != null)
+					ContainerRemote.enable(c1);
+
 				frame.refresh();
 			}
 		);
@@ -39,23 +50,13 @@ public class Load extends JPanel
 		);
 
 		add(
-			new Img(
-			//	"gfx/gif/preloader.gif",
-				"gfx/gif/ajax-loader.gif",
-				"...",
-				80,
-				80
+			new Gif(
+				"gfx/gif/preloader.gif",
+				"Loading..."
 			),
 			"wrap"
 		);
-
-		add(
-			new JLabel(
-				"Loading",
-				SwingConstants.CENTER
-			),
-			"label"
-		);
+		
 
 		frame.setTitle("Loading");
 	}

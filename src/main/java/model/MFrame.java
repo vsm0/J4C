@@ -50,6 +50,14 @@ public class MFrame extends JFrame
 			layerPane.remove(p);
 	}
 
+	public JPanel getContent(int z)
+	{
+		if (z < 0 || z >= layers.length)
+			return null;
+
+		return layers[z];
+	}
+
 	public void setContent(JPanel p)
 	{
 		setContent(p, 0);

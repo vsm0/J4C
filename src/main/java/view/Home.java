@@ -2,6 +2,7 @@ package view;
 
 import model.*;
 import view.ui.*;
+import controller.*;
 import net.miginfocom.swing.*;
 import java.awt.*;
 import javax.swing.*;
@@ -48,7 +49,9 @@ public class Home extends JPanel
                 {
                         public Home doInBackground()
                         {
-                                return new Home();
+                                var page = new Home();
+				ContainerRemote.disable(page);
+				return page;
                         }
 
                         public void done()
