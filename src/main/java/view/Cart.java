@@ -6,11 +6,11 @@ import controller.*;
 import net.miginfocom.swing.*;
 import javax.swing.*;
 
-public class Home extends JPanel
+public class Cart extends JPanel
 {
 	private static MFrame frame;
 
-	private Home()
+	private Cart()
 	{
 		super();
 
@@ -21,31 +21,16 @@ public class Home extends JPanel
 		var header = new NavMenu();
 		add(header, "north, wrap");
 
-		var searchBar = new SearchBar();
-		add(searchBar, "north, wrap");
-
-		var body = new ScrollPanel();
-		body.setLayout(
-			new MigLayout("fill")
-		);
-		add(
-			new JScrollPane(body),
-			"grow"
-		);
-
-		var banner = new Banner();
-		body.add(banner, "growx, wrap");
-
-		frame.setTitle("Home");
+		frame.setTitle("Cart");
 	}
 
 	public static void queue(MFrame _frame)
 	{
-		frame = _frame;
+		_frame = frame;
 
 		PageLoader.invokeLater(
 			() -> {
-				var page = new Home();
+				var page = new Cart();
 				PageLoader.start(page, frame, 0);
 			}
 		);

@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public class MFrame extends JFrame
 {
-	JPanel[] layers;
+	Container[] layers;
 	JLayeredPane layerPane;
 
 	public MFrame(String title, int w, int h)
@@ -19,7 +19,7 @@ public class MFrame extends JFrame
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		layers = new JPanel[3];
+		layers = new Container[3];
 		layerPane = getLayeredPane();
 		layerPane.setLayout(
 			new LayerLayout(layerPane, getSize())
@@ -44,13 +44,13 @@ public class MFrame extends JFrame
 		if (z < 0 || z >= layers.length)
 			return;
 
-		var p = layers[z];
+		var c = layers[z];
 
-		if (p != null)
-			layerPane.remove(p);
+		if (c != null)
+			layerPane.remove(c);
 	}
 
-	public JPanel getContent(int z)
+	public Container getContent(int z)
 	{
 		if (z < 0 || z >= layers.length)
 			return null;
@@ -58,12 +58,12 @@ public class MFrame extends JFrame
 		return layers[z];
 	}
 
-	public void setContent(JPanel p)
+	public void setContent(Container c)
 	{
-		setContent(p, 0);
+		setContent(c, 0);
 	}
 
-	public void setContent(JPanel p, int z)
+	public void setContent(Container c, int z)
 	{
 		if (z < 0 || z >= layers.length)
 			return;
@@ -71,11 +71,12 @@ public class MFrame extends JFrame
 		removeContent(z);
 
 		if (z > 0)
-			p.setOpaque(false);
+			if (c instanceof JPanel)
+				((JPanel) c).setOpaque(false);
 
-		p.setSize(getSize());
-		layers[z] = p;
-		layerPane.add(p, Integer.valueOf(z));
+		c.setSize(getSize());
+		layers[z] = c;
+		layerPane.add(c, Integer.valueOf(z));
 	}
 }
 

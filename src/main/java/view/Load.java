@@ -4,19 +4,43 @@ import model.*;
 import controller.*;
 import net.miginfocom.swing.*;
 import javax.swing.*;
-import javax.imageio.*;
 
 public class Load extends JPanel
 {
 	private static MFrame frame;
 
-	public static void start(MFrame _frame)
+	private Load()
+	{
+		super();
+
+		setLayout(
+			new MigLayout("al center center")
+		);
+
+		add(
+			new Gif(
+				"gfx/gif/preloader.gif",
+				"Loading..."
+			),
+			"wrap"
+		);
+		
+
+		frame.setTitle("Loading");
+	}
+
+	public static void queue(MFrame _frame)
 	{
 		frame = _frame;
-		var content = new Load(frame);
-		frame.setContent(content, 2);
-		frame.refresh();
-		frame.display();
+
+		PageLoader.invokeLater(
+			() -> {
+				var page = new Load();
+				frame.setContent(page, 2);
+				frame.refresh();
+				frame.display();
+			}
+		);
 	}
 
 	public static void stop()
@@ -39,26 +63,6 @@ public class Load extends JPanel
 		);
 		timer.setRepeats(false);
 		timer.start();
-	}
-
-	private Load(MFrame frame)
-	{
-		super();
-
-		setLayout(
-			new MigLayout("al center center")
-		);
-
-		add(
-			new Gif(
-				"gfx/gif/preloader.gif",
-				"Loading..."
-			),
-			"wrap"
-		);
-		
-
-		frame.setTitle("Loading");
 	}
 }
 

@@ -2,7 +2,6 @@ package view;
 
 import model.*;
 import com.formdev.flatlaf.*;
-import java.awt.*;
 import javax.swing.*;
 
 public class Main extends MFrame
@@ -11,7 +10,7 @@ public class Main extends MFrame
 	{
 		super("Main", 480, 512);
 
-		Load.start(this);
+		Load.queue(this);
 
 		Home.queue(this);
 	}
