@@ -11,6 +11,8 @@ public class Load extends JPanel
 	{
 		super();
 
+		frame.setPreferredTitle("Loading");
+
 		setLayout(
 			new MigLayout("al center center")
 		);
@@ -22,9 +24,6 @@ public class Load extends JPanel
 			),
 			"wrap"
 		);
-		
-
-		frame.setTitle("Loading");
 	}
 
 	public static void queue(MFrame frame, Runnable runner)

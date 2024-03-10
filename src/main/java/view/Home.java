@@ -12,6 +12,8 @@ public class Home extends JPanel
 	{
 		super();
 
+		frame.setPreferredTitle("Home");
+
 		setLayout(
 			new MigLayout("fill")
 		);
@@ -33,8 +35,6 @@ public class Home extends JPanel
 
 		var banner = new Banner();
 		body.add(banner, "growx, wrap");
-
-		frame.setTitle("Home");
 	}
 
 	public static Runnable queue(MFrame frame)

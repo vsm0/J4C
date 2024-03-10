@@ -12,6 +12,8 @@ public class Cart extends JPanel
 	{
 		super();
 
+		frame.setPreferredTitle("Cart");
+
 		setLayout(
 			new MigLayout("fill")
 		);
@@ -21,8 +23,6 @@ public class Cart extends JPanel
 
 		var subhead = new CartNav(frame);
 		add(subhead, "north, wrap");
-
-		frame.setTitle("Cart");
 	}
 
 	public static Runnable queue(MFrame frame)

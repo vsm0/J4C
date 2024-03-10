@@ -28,24 +28,31 @@ public class NavMenu extends JPanel
 		);
 		add(logoLabel, "push");
 
+		var isCart = frame
+			.getPreferredTitle()
+			.equals("Cart");
+
 		var loginButton = new JButton(
 			new SvgIcon("user")
 		);
-		add(loginButton);
+		add(loginButton, isCart ? "wrap" : "");
 
-		// TODO: dynamic cart item count
-		var cartButton = new JButton(
-			new SvgIcon("cart-shopping")
-		);
-		cartButton.setText(
-			String.valueOf(counter)
-		);
-		cartButton.addActionListener(
-			e -> Load.queue(
-				frame,
-				Cart.queue(frame)
-			)
-		);
-		add(cartButton, "wrap");
+		if (!isCart)
+		{
+			// TODO: dynamic cart item count
+			var cartButton = new JButton(
+				new SvgIcon("cart-shopping")
+			);
+			cartButton.setText(
+				String.valueOf(counter)
+			);
+			cartButton.addActionListener(
+				e -> Load.queue(
+					frame,
+					Cart.queue(frame)
+				)
+			);
+			add(cartButton, "wrap");
+		}
 	}
 }

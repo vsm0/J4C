@@ -38,6 +38,9 @@ public class PageLoader
 	{
 		ContainerRemote.disable(container);
 		frame.setContent(container, layer);
+		frame.setTitle(
+			frame.getPreferredTitle()
+		);
 		frame.refresh();
 	}
 }

@@ -6,8 +6,9 @@ import javax.swing.*;
 
 public class MFrame extends JFrame
 {
-	Container[] layers;
-	JLayeredPane layerPane;
+	private Container[] layers;
+	private JLayeredPane layerPane;
+	private String preferredTitle;
 
 	public MFrame(String title, int w, int h)
 	{
@@ -24,6 +25,16 @@ public class MFrame extends JFrame
 		layerPane.setLayout(
 			new LayerLayout(layerPane, getSize())
 		);
+	}
+
+	public void setPreferredTitle(String s)
+	{
+		preferredTitle = s;
+	}
+
+	public String getPreferredTitle()
+	{
+		return preferredTitle;
 	}
 
 	public void display()
