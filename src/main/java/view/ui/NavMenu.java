@@ -8,6 +8,7 @@ import javax.swing.*;
 public class NavMenu extends JPanel
 {
 	private static int counter = 0;
+	private static JButton cartButton;
 
 	public NavMenu(MFrame frame)
 	{
@@ -40,7 +41,7 @@ public class NavMenu extends JPanel
 		if (!isCart)
 		{
 			// TODO: dynamic cart item count
-			var cartButton = new JButton(
+			cartButton = new JButton(
 				new SvgIcon("cart-shopping")
 			);
 			cartButton.setText(
@@ -54,5 +55,15 @@ public class NavMenu extends JPanel
 			);
 			add(cartButton, "wrap");
 		}
+	}
+
+	public static void updateCounter(int diff)
+	{
+		counter += diff;
+		cartButton.setText(
+			String.valueOf(counter)
+		);
+		cartButton.revalidate();
+		cartButton.repaint();
 	}
 }

@@ -7,6 +7,8 @@ public class Product
 	private String url;
 	private String specs;
 	private String vendor;
+	private String category;
+	private String likeStatus;
 	private String oldPrice;
 	private String newPrice;
 	private String sale;
@@ -20,6 +22,8 @@ public class Product
 		String url,
 		String specs,
 		String vendor,
+		String category,
+		String likeStatus,
 		double oldPrice,
 		double newPrice,
 		int sale,
@@ -33,6 +37,8 @@ public class Product
 		this.url = url;
 		this.specs = specs;
 		this.vendor = vendor;
+		this.category = category;
+		this.likeStatus = likeStatus;
 		this.oldPrice = String.valueOf(oldPrice);
 		this.newPrice = String.valueOf(newPrice);
 		this.sale = String.valueOf(sale);
@@ -49,6 +55,8 @@ public class Product
 			"url://",
 			"specs",
 			"vendor",
+			"laptop",
+			"no",
 			200.0,
 			150.0,
 			15,
@@ -83,6 +91,16 @@ public class Product
 		return vendor;
 	}
 
+	public String getCategory()
+	{
+		return category;
+	}
+
+	public String getLikeStatus()
+	{
+		return likeStatus;
+	}
+
 	public double getOldPrice()
 	{
 		return Double.valueOf(oldPrice);
@@ -111,6 +129,16 @@ public class Product
 	public int getStock()
 	{
 		return Integer.valueOf(stock);
+	}
+
+	public void setLikeStatus(String likeStatus)
+	{
+		this.likeStatus = likeStatus;
+	}
+
+	public void setStock(int stock)
+	{
+		this.stock = String.valueOf(stock);
 	}
 }
 
