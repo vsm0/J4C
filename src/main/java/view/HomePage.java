@@ -35,6 +35,12 @@ public class HomePage extends JPanel
 
 		var banner = new Banner();
 		body.add(banner, "growx, wrap");
+
+		var categoryGrid = new CategoryGrid(frame);
+		body.add(
+			new JScrollPane(categoryGrid),
+			"grow, wrap"
+		);
 	}
 
 	public static Runnable queue(MFrame frame)
