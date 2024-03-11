@@ -9,7 +9,6 @@ public class DynamicGridLayout extends GridLayout
 {
 	private MFrame frame;
 	private JPanel panel;
-	private int columnCount;
 	private int maxColumns = 10;
 
 	public DynamicGridLayout(MFrame frame, JPanel panel)
@@ -37,8 +36,9 @@ public class DynamicGridLayout extends GridLayout
 
 	private void resize()
 	{
+		var columnCount = getColumnCount();
 		panel.setLayout(
-			new GridLayout(0, getColumnCount())
+			new GridLayout(0, columnCount)
 		);
 	}
 	
