@@ -5,6 +5,17 @@ import java.util.*;
 
 public class Database
 {
+	private static List<String> products = new ArrayList<>();
+	private static List<String> cartIds = new ArrayList<>();
+	private static Map<String, CartItem> cart = Map.of(
+		"Id",
+		new CartItem()
+	);
+	private static Map<String, Product> inventory = Map.of(
+		"Id", 
+		new Product()
+	);
+
 	public Database()
 	{
 	}
@@ -20,44 +31,54 @@ public class Database
 
 	public static List<String> getProducts()
 	{
-		// debug
-		List<String> list = new ArrayList<>();
-
-		list.add("id");
-
-		return list;
+		return products;
 	}
 
 	public static Product getProduct(String id)
 	{
-		var list = getProducts();
+		return inventory.get(id);
+	}
 
-		Map<String, Product> db = new HashMap<>();
+	//TODO: Account specific check
+	public static Map<String, CartItem> getCart()
+	{
+		return cart;
+	}
 
-		db.put(
-			"id",
-			new Product(
-				"Name",
-				"id",
-				"test.jpg",
-				"good spec",
-				"vendor",
-				123.50, // old price
-				89.72, // new price
-				12, // sale
-				2, // rate
-				58, // sold
-				100 // stock
-			)
-		);
+	public static void removeFromCart(String id)
+	{
+		removeFromCart(id, -1);
+	}
 
-		for (String s : list)
-		{
-			if (s.equals(id))
-				return db.get(id);
-		}
+	public static void removeFromCart(String id, int quantity)
+	{
+		var i = getCart().get(id);
 
-		return null;
+		if (i == null)
+			return;
+/*
+		if (quantity < 0)
+			quantity = i.getQuantity();
+
+		cart.remove(id);
+*/
+		// save db
+	}
+
+	public static void addToCart(String id, int quantity)
+	{
+		var p = inventory.get(id);
+
+		if (p == null)
+			return;
+
+		var item = new CartItem(p);
+
+		item.setQuantity(quantity);
+
+		cart.put(id, item);
+
+		//save db
 	}
 }
 

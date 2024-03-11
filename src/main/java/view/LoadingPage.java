@@ -5,9 +5,9 @@ import controller.*;
 import net.miginfocom.swing.*;
 import javax.swing.*;
 
-public class Load extends JPanel
+public class LoadingPage extends JPanel
 {
-	private Load(MFrame frame)
+	private LoadingPage(MFrame frame)
 	{
 		super();
 
@@ -30,7 +30,7 @@ public class Load extends JPanel
 	{
 		PageLoader.invokeLater(
 			() -> {
-				var page = new Load(frame);
+				var page = new LoadingPage(frame);
 				frame.setContent(page, 2);
 				frame.refresh();
 				frame.display();

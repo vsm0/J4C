@@ -6,9 +6,9 @@ import controller.*;
 import net.miginfocom.swing.*;
 import javax.swing.*;
 
-public class Cart extends JPanel
+public class CartPage extends JPanel
 {
-	private Cart(MFrame frame)
+	private CartPage(MFrame frame)
 	{
 		super();
 
@@ -28,7 +28,7 @@ public class Cart extends JPanel
 	public static Runnable queue(MFrame frame)
 	{
 		return () -> {
-			var page = new Cart(frame);
+			var page = new CartPage(frame);
 			PageLoader.start(page, frame, 0);
 		};
 	}

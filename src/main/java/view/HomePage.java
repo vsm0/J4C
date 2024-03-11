@@ -6,9 +6,9 @@ import controller.*;
 import net.miginfocom.swing.*;
 import javax.swing.*;
 
-public class Home extends JPanel
+public class HomePage extends JPanel
 {
-	private Home(MFrame frame)
+	private HomePage(MFrame frame)
 	{
 		super();
 
@@ -40,7 +40,7 @@ public class Home extends JPanel
 	public static Runnable queue(MFrame frame)
 	{
 		return () -> {
-			var page = new Home(frame);
+			var page = new HomePage(frame);
 			PageLoader.start(page, frame, 0);
 		};
 	}

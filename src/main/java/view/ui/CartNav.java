@@ -19,9 +19,9 @@ public class CartNav extends JPanel
 			new SvgIcon("arrow-left")
 		);
 		backButton.addActionListener(
-			e -> Load.queue(
+			e -> LoadingPage.queue(
 				frame,
-				Home.queue(frame)
+				HomePage.queue(frame)
 			)
 		);
 		add(backButton, "push");

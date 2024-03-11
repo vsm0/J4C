@@ -41,6 +41,23 @@ public class Product
 		this.stock = String.valueOf(stock);
 	}
 
+	public Product() //for testing
+	{
+		this(
+			"Name",
+			"Id",
+			"url://",
+			"specs",
+			"vendor",
+			200.0,
+			150.0,
+			15,
+			3,
+			67,
+			100
+		);
+	}
+
 	public String getName()
 	{
 		return name;

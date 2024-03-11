@@ -47,9 +47,9 @@ public class NavMenu extends JPanel
 				String.valueOf(counter)
 			);
 			cartButton.addActionListener(
-				e -> Load.queue(
+				e -> LoadingPage.queue(
 					frame,
-					Cart.queue(frame)
+					CartPage.queue(frame)
 				)
 			);
 			add(cartButton, "wrap");

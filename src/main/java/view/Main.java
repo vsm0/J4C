@@ -10,9 +10,9 @@ public class Main extends MFrame
 	{
 		super("Main", 480, 512);
 
-		Load.queue(
+		LoadingPage.queue(
 			this,
-			Home.queue(this)
+			HomePage.queue(this)
 		);
 	}
 
