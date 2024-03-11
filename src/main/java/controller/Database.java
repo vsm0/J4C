@@ -10,7 +10,13 @@ public class Database
 
 	public Database()
 	{
-		// init cart and inventory
+		CartItem[] carr = { new CartItem() };
+
+		cart = new Cart(carr);
+
+		Product[] parr = { new Product() };
+
+		inventory = new Inventory(parr);
 	}
 
 	public static boolean getConnection(
@@ -22,7 +28,6 @@ public class Database
 		return true;
 	}
 
-	//TODO: Account specific check
 	public static Cart getCart()
 	{
 		return cart;

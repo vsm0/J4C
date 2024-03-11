@@ -15,16 +15,21 @@ public class Inventory extends HashMap<String, Product>
 
 	private boolean isInvalid(String id, int quantity)
 	{
-		return !containsKey(id)
-			|| quantity < 0;
+		return quantity < 0 || !containsKey(id);
 	}
 
-	public boolean updateStock(String id, int quantity)
+	public boolean sell(String id, int quantity)
 	{
 		if (isInvalid(id, quantity))
 			return false;
 
-		var p = get(id);
+		return true;
+	}
+
+	public boolean stock(String id, int quantity)
+	{
+		if (isInvalid(id, quantity))
+			return false;
 
 		return true;
 	}
