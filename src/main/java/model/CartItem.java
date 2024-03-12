@@ -25,7 +25,7 @@ public class CartItem
 
 	public CartItem(Product p)
 	{
-		this(p, 0);
+		this(p, 1);
 	}
 
 	public CartItem(Product p, int quantity)

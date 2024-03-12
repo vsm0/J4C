@@ -36,10 +36,23 @@ public class CartPage extends JPanel
 		Database
 		.getCart()
 		.forEach(
-			(id, item) -> body.add(
-				new CartEntry(item),
+			(id, item) -> {
+				var entry = new CartEntry(item);
+				body.add(
+				entry,
 				"growx, wrap"
-			)
+				);
+			}
+		);
+
+		add(
+			new JButton("Checkout"),
+			"growx, gapbefore push, south"
+		);
+
+		add(
+			new JLabel("Total Price: " + 0, JLabel.LEFT),
+			"label, south"
 		);
 	}
 
