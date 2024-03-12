@@ -49,7 +49,7 @@ public class HomePage extends JPanel
 		.getInventory()
 		.forEach(
 			(id, product) -> body.add(
-				new BrowseItem(product),
+				new BrowseEntry(product),
 				"growx, wrap"
 			)
 		);

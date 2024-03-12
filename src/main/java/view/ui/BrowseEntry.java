@@ -1,12 +1,13 @@
 package view.ui;
 
 import model.*;
+import controller.*;
 import net.miginfocom.swing.*;
 import javax.swing.*;
 
-public class BrowseItem extends JPanel
+public class BrowseEntry extends JPanel
 {
-	public BrowseItem(Product p)
+	public BrowseEntry(Product p)
 	{
 		super();
 
@@ -79,7 +80,14 @@ public class BrowseItem extends JPanel
 		);
 		addButton.addActionListener(
 			e -> {
-				NavMenu.updateCounter(1);
+				Database
+				.getCart()
+				.diff(
+					p.getId(),
+					1
+				);
+
+				NavMenu.updateCounter();
 			}
 		);
 		add(addButton);

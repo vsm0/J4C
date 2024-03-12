@@ -2,12 +2,12 @@ package view.ui;
 
 import model.*;
 import view.*;
+import controller.*;
 import net.miginfocom.swing.*;
 import javax.swing.*;
 
 public class NavMenu extends JPanel
 {
-	private static int counter = 0;
 	private static JButton cartButton;
 
 	public NavMenu(MFrame frame)
@@ -44,9 +44,7 @@ public class NavMenu extends JPanel
 			cartButton = new JButton(
 				new SvgIcon("cart-shopping")
 			);
-			cartButton.setText(
-				String.valueOf(counter)
-			);
+			updateCounter();
 			cartButton.addActionListener(
 				e -> LoadingPage.queue(
 					frame,
@@ -57,11 +55,14 @@ public class NavMenu extends JPanel
 		}
 	}
 
-	public static void updateCounter(int diff)
+	public static void updateCounter()
 	{
-		counter += diff;
 		cartButton.setText(
-			String.valueOf(counter)
+			String.valueOf(
+				Database
+				.getCart()
+				.getSize()
+			)
 		);
 		cartButton.revalidate();
 		cartButton.repaint();

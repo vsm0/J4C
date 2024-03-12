@@ -1,6 +1,7 @@
 package controller;
 
 import model.*;
+import controller.*;
 import java.util.*;
 
 public class Cart extends HashMap<String, CartItem>
@@ -12,7 +13,10 @@ public class Cart extends HashMap<String, CartItem>
 		super();
 
 		for (CartItem i : items)
+		{
 			put(i.getId(), i);
+			realSize += i.getQuantity();
+		}
 	}
 
 	public Cart()
@@ -20,31 +24,46 @@ public class Cart extends HashMap<String, CartItem>
 		super();
 	}
 
-	public void set(String id, int quantity)
+	public int getSize()
 	{
-		if (quantity < 1)
+		return realSize;
+	}
+
+	public void diff(String id, int diff)
+	{
+		var p = Database
+			.getInventory()
+			.get(id);
+
+		if (p == null)
+		{
+			remove(id);
 			return;
+		}
 
 		var i = get(id);
 
 		if (i == null)
 		{
-			i = new CartItem(
-				Database
-				.getInventory()
-				.get(id),
-				quantity
+			if (diff < 1)
+				return;
+
+			put(
+				id,
+				new CartItem(p, diff)
 			);
-			realSize += quantity;
 		}
 		else
 		{
-			var oldQuantity = i.getQuantity();
-			i.setQuantity(quantity);
-			realSize += quantity - oldQuantity;
+			var quantity = i.getQuantity();
+
+			if (Math.abs(diff) > quantity)
+				return;
+
+			i.setQuantity(quantity + diff);
 		}
 
-		put(id, i);
+		realSize += diff;
 	}
 }
 

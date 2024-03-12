@@ -23,6 +23,24 @@ public class CartPage extends JPanel
 
 		var subhead = new CartNav(frame);
 		add(subhead, "north, wrap");
+
+		var body = new ScrollPanel();
+		body.setLayout(
+			new MigLayout("fill")
+		);
+		add(
+			new JScrollPane(body),
+			"grow"
+		);
+
+		Database
+		.getCart()
+		.forEach(
+			(id, item) -> body.add(
+				new CartEntry(item),
+				"growx, wrap"
+			)
+		);
 	}
 
 	public static Runnable queue(MFrame frame)

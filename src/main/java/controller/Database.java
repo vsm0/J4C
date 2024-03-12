@@ -10,7 +10,7 @@ public class Database
 
 	public Database()
 	{
-		CartItem[] carr = { new CartItem() };
+		CartItem[] carr = {};
 
 		cart = new Cart(carr);
 

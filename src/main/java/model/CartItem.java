@@ -65,9 +65,9 @@ public class CartItem
 		return url;
 	}
 
-	public double getQuantity()
+	public int getQuantity()
 	{
-		return Double.valueOf(quantity);
+		return Integer.valueOf(quantity);
 	}
 
 	public int getPrice()
