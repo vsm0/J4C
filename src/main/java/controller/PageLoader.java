@@ -17,7 +17,7 @@ public class PageLoader
 
 	public static void invokeLater(Runnable during, Runnable after)
 	{
-		new SwingWorker<Void, Void>()
+/*		new SwingWorker<Void, Void>()
 		{
 			public Void doInBackground()
 			{
@@ -31,7 +31,9 @@ public class PageLoader
 			}
 		}
 		.execute();
-			
+		*/
+		during.run();
+		after.run();
 	}
 
 	public static void start(Container container, MFrame frame, int layer)

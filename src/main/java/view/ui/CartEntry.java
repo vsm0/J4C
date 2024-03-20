@@ -14,7 +14,7 @@ public class CartEntry extends JPanel
 		setLayout(
 			new MigLayout("fill")
 		);
-/*
+
 		var nameLabel = new JLabel(
 			item.getName()
 		);
@@ -28,15 +28,15 @@ public class CartEntry extends JPanel
 
 		add(
 			new JLabel("Unit price: $" + price)
-		);*/
-/*
+		);
+
 		var trashButton = new JButton(
 			new SvgIcon("trash")
 		);
 		trashButton.addActionListener(
 			e -> {}
 		);
-		add(trashButton);*/
+		add(trashButton);
 /*
 		var stock = Database
 			.getInventory()
@@ -48,21 +48,6 @@ public class CartEntry extends JPanel
 		);
 		add(spinner);
 		*/
-
-		var name = item.getName();
-		var price = item.getPrice();
-		var quantity = item.getQuantity();
-
-		var totalPrice = price * quantity;
-/*
-		add(
-			new Paragraph(
-				this,*/
-		System.out.println("Name: " + name
-				+ "; Unit price: " + price
-				+ "; Total price: " + totalPrice);
-		/*	)
-		);*/
 	}
 }
 

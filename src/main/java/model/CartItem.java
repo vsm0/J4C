@@ -70,9 +70,9 @@ public class CartItem
 		return Integer.valueOf(quantity);
 	}
 
-	public int getPrice()
+	public double getPrice()
 	{
-		return Integer.valueOf(price);
+		return Double.valueOf(price);
 	}
 
 	public void setQuantity(int quantity)
