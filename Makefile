@@ -10,3 +10,6 @@ run:
 
 clean:
 	./gradlew clean --parallel
+
+zip:
+	./gradlew distZip --warning-mode all --parallel
