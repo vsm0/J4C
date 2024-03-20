@@ -80,12 +80,7 @@ public class BrowseEntry extends JPanel
 		);
 		addButton.addActionListener(
 			e -> {
-				Database
-				.getCart()
-				.diff(
-					p.getId(),
-					1
-				);
+				Database.addCart(p, 1);
 
 				NavMenu.updateCounter();
 			}

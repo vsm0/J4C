@@ -29,41 +29,30 @@ public class Cart extends HashMap<String, CartItem>
 		return realSize;
 	}
 
-	public void diff(String id, int diff)
+	public CartItem get(String id, Product p)
 	{
-		var p = Database
-			.getInventory()
-			.get(id);
+		var item = super.get(id);
 
-		if (p == null)
-		{
-			remove(id);
-			return;
-		}
+		return (item == null) ? new CartItem(p) : item;
+	}
 
-		var i = get(id);
+	public boolean addItem(Product p, int amount)
+	{
+		var stock = p.getStock();
 
-		if (i == null)
-		{
-			if (diff < 1)
-				return;
+		var id = p.getId();
 
-			put(
-				id,
-				new CartItem(p, diff)
-			);
-		}
-		else
-		{
-			var quantity = i.getQuantity();
+		var item = get(id, p);
 
-			if (Math.abs(diff) > quantity)
-				return;
+		var quantity = item.getQuantity();
 
-			i.setQuantity(quantity + diff);
-		}
+		item.setQuantity(quantity + amount);
 
-		realSize += diff;
+		put(id, item);
+
+		realSize += amount;
+
+		return true;
 	}
 }
 

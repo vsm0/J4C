@@ -13,25 +13,16 @@ public class Inventory extends HashMap<String, Product>
 			put(p.getId(), p);
 	}
 
+	public Product get(String id)
+	{
+		var product = super.get(id);
+
+		return (product == null) ? new Product() : product;
+	}
+
 	private boolean isInvalid(String id, int quantity)
 	{
 		return quantity < 0 || !containsKey(id);
-	}
-
-	public boolean sell(String id, int quantity)
-	{
-		if (isInvalid(id, quantity))
-			return false;
-
-		return true;
-	}
-
-	public boolean stock(String id, int quantity)
-	{
-		if (isInvalid(id, quantity))
-			return false;
-
-		return true;
 	}
 }
 

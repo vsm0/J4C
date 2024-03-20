@@ -50,8 +50,8 @@ public class Product
 	public Product() //for testing
 	{
 		this(
-			"Name",
-			"Id",
+			String.valueOf(Math.random()),
+			String.valueOf(Math.random()),
 			"url://",
 			"specs",
 			"vendor",
@@ -136,9 +136,19 @@ public class Product
 		this.likeStatus = likeStatus;
 	}
 
+	public boolean hasStock()
+	{
+		return getStock() > 0;
+	}
+
 	public void setStock(int stock)
 	{
 		this.stock = String.valueOf(stock);
+	}
+
+	public void updateStock(int diff)
+	{
+		setStock(getStock() + diff);
 	}
 }
 
