@@ -1,22 +1,44 @@
 package controller;
 
+import com.google.gson.*;
+import com.google.gson.reflect.*;
+import java.lang.reflect.*;
+import java.util.*;
+import java.io.*;
 import java.nio.file.*;
 
 public class FileIO
 {
-	public String getString(String path)
-	{
-		var stream = FileIO
-			.class
-			.getClassLoader()
-			.getResourceAsStream(path);
+	private static Gson gson = new GsonBuilder()
+		.setPrettyPrinting()
+		.create();
 
-		if (stream == null)
-			return null;
+	private static String getDataPath(String path)
+	{
+		var root = System.getProperty("user.dir");
+
+		if (root.endsWith("/bin"))
+			root = root.substring(
+				0, root.length() - 4
+			);
+
+		return root + "/data/" + path;
+	}
+
+	public static String getString(String path)
+	{
+		var dataPath = getDataPath(path);
 
 		try
 		{
-			return new String(stream.readAllBytes());
+			var file = new File(dataPath);
+
+			if (!file.exists())
+				file.createNewFile();
+
+			var filePath = Paths.get(dataPath);
+
+			return Files.readString(filePath);
 		}
 		catch (Exception e)
 		{
@@ -26,13 +48,15 @@ public class FileIO
 		return null;
 	}
 
-	public boolean putString(String s, String path)
+	public static boolean putString(String s, String path)
 	{
+		var dataPath = getDataPath(path);
+
 		try
 		{
-			var res = Paths.get("rwdata");
+			var filePath = Paths.get(dataPath);
 
-			Files.writeString(res, s);
+			Files.writeString(filePath, s);
 
 			return true;
 		}
@@ -42,6 +66,21 @@ public class FileIO
 		}
 
 		return false;
+	}
+
+	private static <T> Type getType(Class<T> type)
+	{
+		return TypeToken.getParameterized(List.class, type).getType();
+	}
+
+	public static <T> List<T> fromJson(String content, Class<T> type)
+	{
+		return gson.fromJson(content, getType(type));
+	}
+
+	public static <T> String toJson(List<T> container, Class<T> type)
+	{
+		return gson.toJson(container, getType(type));
 	}
 }
 

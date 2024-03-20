@@ -10,7 +10,7 @@ public class Database
 
 	public Database()
 	{
-		CartItem[] carr = {};
+		var carr = loadCart();
 
 		cart = new Cart(carr);
 
@@ -25,6 +25,24 @@ public class Database
 			parr[i] = list.get(i);
 
 		inventory = new Inventory(parr);
+	}
+
+	public List<CartItem> loadCart()
+	{
+		var content = FileIO.getString("cart.json");
+
+		if (content == null)
+		{
+			content = "[]";
+			FileIO.putString("cart.json", content);
+		}
+
+		var carr = FileIO.fromJson(content, CartItem.class);
+
+		if (carr == null)
+			carr = new ArrayList<>();
+
+		return carr;
 	}
 
 	public static boolean getConnection(

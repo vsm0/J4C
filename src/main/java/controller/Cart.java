@@ -8,7 +8,7 @@ public class Cart extends HashMap<String, CartItem>
 {
 	private int realSize = 0;
 
-	public Cart(CartItem[] items)
+	public Cart(List<CartItem> items)
 	{
 		super();
 
