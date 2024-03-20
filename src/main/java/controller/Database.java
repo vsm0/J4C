@@ -10,26 +10,18 @@ public class Database
 
 	public Database()
 	{
-		var carr = loadCart();
+		cart = new Cart(
+			loadList("cart", CartItem.class)
+		);
 
-		cart = new Cart(carr);
-
-		ArrayList<Product> list = new ArrayList<>();
-
-		for (int i = 0; i < 20; i++)
-			list.add(new Product());
-
-		Product[] parr = new Product[list.size()];
-
-		for (int i = 0; i < list.size(); i++)
-			parr[i] = list.get(i);
-
-		inventory = new Inventory(parr);
+		inventory = new Inventory(
+			loadList("inventory", Product.class)
+		);
 	}
 
-	public List<CartItem> loadCart()
+	public <T> List<T> loadList(String filename, Class<T> type)
 	{
-		var content = FileIO.getString("cart.json");
+		var content = FileIO.getString(filename + ".json");
 
 		if (content == null)
 		{
@@ -37,7 +29,7 @@ public class Database
 			FileIO.putString("cart.json", content);
 		}
 
-		var carr = FileIO.fromJson(content, CartItem.class);
+		var carr = FileIO.fromJson(content, type);
 
 		if (carr == null)
 			carr = new ArrayList<>();

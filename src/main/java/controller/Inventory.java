@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Inventory extends HashMap<String, Product>
 {
-	public Inventory(Product[] list)
+	public Inventory(List<Product> list)
 	{
 		super();
 
