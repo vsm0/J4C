@@ -16,12 +16,6 @@ public class Database
 
 		var pList = loadList("inventory", Product.class);
 
-		if (pList.size() == 0)
-			for (int i = 0; i < 10; i++)
-				pList.add(
-					new Product()
-				);
-
 		inventory = new Inventory(pList);
 
 		saveList("inventory", inventory, Product.class);
