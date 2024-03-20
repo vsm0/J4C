@@ -14,19 +14,27 @@ public class Database
 			loadList("cart", CartItem.class)
 		);
 
-		inventory = new Inventory(
-			loadList("inventory", Product.class)
-		);
+		var pList = loadList("inventory", Product.class);
+
+		if (pList.size() == 0)
+			for (int i = 0; i < 10; i++)
+				pList.add(
+					new Product()
+				);
+
+		inventory = new Inventory(pList);
+
+		saveList("inventory", inventory, Product.class);
 	}
 
-	public <T> List<T> loadList(String filename, Class<T> type)
+	private static <T> List<T> loadList(String filename, Class<T> type)
 	{
 		var content = FileIO.getString(filename + ".json");
 
 		if (content == null)
 		{
 			content = "[]";
-			FileIO.putString("cart.json", content);
+			FileIO.putString(filename + ".json", content);
 		}
 
 		var carr = FileIO.fromJson(content, type);
@@ -35,6 +43,19 @@ public class Database
 			carr = new ArrayList<>();
 
 		return carr;
+	}
+	
+	public static <T> boolean saveList(String filename, Map<String, T> map, Class<T> type)
+	{
+		List<T> list = new ArrayList<>();
+
+		map.forEach(
+			(id, item) -> list.add(item)
+		);
+
+		var content = FileIO.toJson(list, type);
+
+		return FileIO.putString(filename + ".json", content);
 	}
 
 	public static boolean getConnection(
@@ -68,8 +89,13 @@ public class Database
 		if (!p.hasStock())
 			return;
 
-		if (cart.addItem(p, amount))
-			p.updateStock(-amount);
+		if (!cart.addItem(p, amount))
+			return;
+
+		p.updateStock(-amount);
+
+		saveList("cart", cart, CartItem.class);
+		saveList("inventory", inventory, Product.class);
 	}
 }
 

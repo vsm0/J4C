@@ -48,7 +48,7 @@ public class FileIO
 		return null;
 	}
 
-	public static boolean putString(String s, String path)
+	public static boolean putString(String path, String s)
 	{
 		var dataPath = getDataPath(path);
 
