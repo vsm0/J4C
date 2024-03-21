@@ -32,6 +32,8 @@ public class PageLoader
 		}
 		.execute();
 		*/
+		Database.save();
+
 		during.run();
 		after.run();
 	}

@@ -7,9 +7,14 @@ public class Database
 {
 	private static Cart cart;
 	private static Inventory inventory;
+	private static boolean saveCart;
+	private static boolean saveInventory;
 
 	public Database()
 	{
+		saveCart = true;
+		saveInventory = true;
+
 		cart = new Cart(
 			loadList("cart", CartItem.class)
 		);
@@ -17,8 +22,6 @@ public class Database
 		var pList = loadList("inventory", Product.class);
 
 		inventory = new Inventory(pList);
-
-		saveList("inventory", inventory, Product.class);
 	}
 
 	private static <T> List<T> loadList(String filename, Class<T> type)
@@ -97,8 +100,8 @@ public class Database
 
 		p.updateStock(-amount);
 
-		saveList("cart", cart, CartItem.class);
-		saveList("inventory", inventory, Product.class);
+		saveCart = true;
+		saveInventory = true;
 	}
 
 	public static void clearCart()
@@ -111,8 +114,20 @@ public class Database
 
 		cart.clear();
 
-		saveList("cart", cart, CartItem.class);
-		saveList("inventory", inventory, Product.class);
+		saveCart = true;
+		saveInventory = true;
+	}
+
+	public static void save()
+	{
+		if (saveCart)
+			saveList("cart", cart, CartItem.class);
+
+		if (saveInventory)
+			saveList("inventory", inventory, Product.class);
+
+		saveCart = false;
+		saveInventory = false;
 	}
 }
 
