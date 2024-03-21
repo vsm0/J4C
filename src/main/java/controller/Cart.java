@@ -6,16 +6,22 @@ import java.util.*;
 
 public class Cart extends HashMap<String, CartItem>
 {
-	private int realSize = 0;
+	private int realSize;
+	private double totalPrice;
 
 	public Cart(List<CartItem> items)
 	{
 		super();
 
+		realSize = 0;
+		totalPrice = 0.0;
+
 		for (CartItem i : items)
 		{
 			put(i.getId(), i);
-			realSize += i.getQuantity();
+			var quantity = i.getQuantity();
+			realSize += quantity;
+			totalPrice += quantity * i.getPrice();
 		}
 	}
 
@@ -29,6 +35,18 @@ public class Cart extends HashMap<String, CartItem>
 		return realSize;
 	}
 
+	public double getTotal()
+	{
+		return totalPrice;
+	}
+
+	public void clear()
+	{
+		super.clear();
+		realSize = 0;
+		totalPrice = 0.0;
+	}
+
 	public CartItem get(String id, Product p)
 	{
 		var item = super.get(id);
@@ -38,19 +56,19 @@ public class Cart extends HashMap<String, CartItem>
 
 	public boolean addItem(Product p, int amount)
 	{
-		var stock = p.getStock();
-
 		var id = p.getId();
 
 		var item = get(id, p);
 
-		var quantity = item.getQuantity();
+		item.setQuantity(item.getQuantity() + amount);
 
-		item.setQuantity(quantity + amount);
-
-		put(id, item);
+		if (item.getQuantity() == 0)
+			remove(id);
+		else
+			put(id, item);
 
 		realSize += amount;
+		totalPrice += amount * item.getPrice();
 
 		return true;
 	}

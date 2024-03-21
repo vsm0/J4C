@@ -2,12 +2,13 @@ package view.ui;
 
 import model.*;
 import view.*;
+import controller.*;
 import net.miginfocom.swing.*;
 import javax.swing.*;
 
 public class CartNav extends JPanel
 {
-	public CartNav(MFrame frame)
+	public CartNav(MFrame frame, Runnable remover)
 	{
 		super();
 
@@ -25,6 +26,14 @@ public class CartNav extends JPanel
 			)
 		);
 		add(backButton, "push");
+
+		var clearButton = new JButton(
+			new SvgIcon("trash")
+		);
+		clearButton.addActionListener(
+			e -> remover.run()
+		);
+		add(clearButton);
 	}
 }
 

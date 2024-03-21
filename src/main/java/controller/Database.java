@@ -78,15 +78,33 @@ public class Database
 		addCart(p, amount);
 	}
 
+	public static void delCart(String id, int amount)
+	{
+		var p = inventory.get(id);
+
+		addCart(p, -amount);
+	}
+
 	public static void addCart(Product p, int amount)
 	{
-		if (!p.hasStock())
-			return;
-
 		if (!cart.addItem(p, amount))
 			return;
 
 		p.updateStock(-amount);
+
+		saveList("cart", cart, CartItem.class);
+		saveList("inventory", inventory, Product.class);
+	}
+
+	public static void clearCart()
+	{
+		cart.forEach(
+			(id, item) -> inventory.get(id).updateStock(
+				item.getQuantity()
+			)
+		);
+
+		cart.clear();
 
 		saveList("cart", cart, CartItem.class);
 		saveList("inventory", inventory, Product.class);

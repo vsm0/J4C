@@ -8,6 +8,10 @@ import javax.swing.*;
 
 public class CartPage extends JPanel
 {
+	private JLabel priceLabel;
+	private int itemIndex;
+	private ScrollPanel body;
+
 	private CartPage(MFrame frame)
 	{
 		super();
@@ -21,10 +25,17 @@ public class CartPage extends JPanel
 		var header = new NavMenu(frame);
 		add(header, "north, wrap");
 
-		var subhead = new CartNav(frame);
+		var subhead = new CartNav(
+			frame,
+			() -> {
+				Database.clearCart();
+				body.removeAll();
+				refresh();
+			}
+		);
 		add(subhead, "north, wrap");
 
-		var body = new ScrollPanel();
+		body = new ScrollPanel();
 		body.setLayout(
 			new MigLayout("fill")
 		);
@@ -33,26 +44,65 @@ public class CartPage extends JPanel
 			"grow"
 		);
 
-		Database
-		.getCart()
-		.forEach(
+		var cart = Database.getCart();
+
+		itemIndex = 1;
+
+		cart.forEach(
 			(id, item) -> {
-				var entry = new CartEntry(item);
+				var entry = new CartEntry(
+					item,
+					itemIndex++ < cart.size()
+				);
+				entry.listen(
+					() -> {
+						Database.delCart(
+							id,
+							item.getQuantity()
+						);
+
+						body.remove(entry);
+						refresh();
+					}
+				);
+
 				body.add(
-				entry,
-				"growx, wrap"
+					entry,
+					"growx, wrap"
 				);
 			}
 		);
 
+		var side = new ScrollPanel();
+		side.setLayout(
+			new MigLayout("fill")
+		);
 		add(
-			new JButton("Checkout"),
-			"growx, gapbefore push, south"
+			new JScrollPane(side),
+			"grow"
 		);
 
-		add(
-			new JLabel("Total Price: " + 0, JLabel.LEFT),
-			"label, south"
+		priceLabel = new JLabel();
+		refreshPrice();
+		side.add(priceLabel, "wrap");
+
+		side.add(
+			new JButton("Checkout")
+		);
+	}
+
+	private void refresh()
+	{
+		refreshPrice();
+
+		revalidate();
+		repaint();
+	}
+
+	private void refreshPrice()
+	{
+		priceLabel.setText(
+			"Total Price: $" + Database.getCart().getTotal()
 		);
 	}
 

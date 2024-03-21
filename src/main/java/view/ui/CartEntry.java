@@ -1,13 +1,14 @@
 package view.ui;
 
 import model.*;
-import controller.*;
 import net.miginfocom.swing.*;
 import javax.swing.*;
 
 public class CartEntry extends JPanel
 {
-	public CartEntry(CartItem item)
+	private JButton trashButton;
+
+	public CartEntry(CartItem item, boolean hasNextEntry)
 	{
 		super();
 
@@ -25,18 +26,27 @@ public class CartEntry extends JPanel
 		add(nameLabel, "north");
 
 		var price = item.getPrice();
+		var quantity = item.getQuantity();
 
 		add(
-			new JLabel("Unit price: $" + price)
+			new JLabel("Quantity: " + quantity),
+			"wrap"
 		);
 
-		var trashButton = new JButton(
+		add(
+			new JLabel("Unit price: $" + price),
+			"wrap"
+		);
+
+		add(
+			new JLabel("Subtotal: $" + quantity * price),
+			"wrap"
+		);
+
+		trashButton = new JButton(
 			new SvgIcon("trash")
 		);
-		trashButton.addActionListener(
-			e -> {}
-		);
-		add(trashButton);
+
 /*
 		var stock = Database
 			.getInventory()
@@ -48,6 +58,19 @@ public class CartEntry extends JPanel
 		);
 		add(spinner);
 		*/
+
+		if (hasNextEntry)
+			add(
+				new JSeparator(JSeparator.HORIZONTAL),
+				"growx"
+			);
+	}
+
+	public void listen(Runnable remover)
+	{
+		trashButton.addActionListener(
+			e -> remover.run()
+		);
 	}
 }
 
