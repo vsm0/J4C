@@ -1,6 +1,7 @@
 package view.ui;
 
 import model.*;
+import controller.*;
 import net.miginfocom.swing.*;
 import javax.swing.*;
 
@@ -43,9 +44,19 @@ public class CartEntry extends JPanel
 			"wrap"
 		);
 
+		add(
+			new LikeButton(
+				Database.getProduct(
+					item.getId()
+				)
+			),
+			"growx, pushx"
+		);
+
 		trashButton = new JButton(
 			new SvgIcon("trash")
 		);
+		add(trashButton, "wrap");
 
 /*
 		var stock = Database

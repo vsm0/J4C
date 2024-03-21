@@ -71,6 +71,11 @@ public class Database
 		return inventory;
 	}
 
+	public static Product getProduct(String id)
+	{
+		return inventory.get(id);
+	}
+
 	public static void addCart(String id, int amount)
 	{
 		var p = inventory.get(id);

@@ -12,7 +12,7 @@
     "sale": "29",
     "rating": "4",
     "sold": "54",
-    "stock": "56"
+    "stock": "53"
   },
   {
     "name": "Bighard Doors 001",
@@ -21,13 +21,13 @@
     "specs": "specs",
     "vendor": "Bughard inc.",
     "category": "laptop",
-    "likeStatus": "yes",
+    "likeStatus": "no",
     "oldPrice": "630.0",
     "newPrice": "600.0",
     "sale": "5",
     "rating": "1",
     "sold": "34",
-    "stock": "79"
+    "stock": "77"
   },
   {
     "name": "Water 4K Gen 14",
@@ -51,7 +51,7 @@
     "specs": "specs",
     "vendor": "Elise TK8",
     "category": "mobile",
-    "likeStatus": "yes",
+    "likeStatus": "no",
     "oldPrice": "100.0",
     "newPrice": "80.0",
     "sale": "20",

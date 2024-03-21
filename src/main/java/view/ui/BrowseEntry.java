@@ -56,24 +56,9 @@ public class BrowseEntry extends JPanel
 			"label, growx, pushx"
 		);
 
-		var likeButton = new JButton(
-			getSvgIcon(
-				p.getLikeStatus()
-			)
+		add(
+			new LikeButton(p)
 		);
-		likeButton.addActionListener(
-			e -> {
-				var status = p
-					.getLikeStatus()
-					.equals("yes") ? "no" : "yes";
-				p.setLikeStatus(status);
-
-				likeButton.setIcon(
-					getSvgIcon(status)
-				);
-			}
-		);
-		add(likeButton);
 
 		var addButton = new JButton(
 			new SvgIcon("cart-plus")
@@ -86,17 +71,6 @@ public class BrowseEntry extends JPanel
 			}
 		);
 		add(addButton);
-	}
-
-	private SvgIcon getSvgIcon(String status)
-	{
-		return new SvgIcon(
-			switch (status)
-			{
-				case "yes" -> "heart";
-				default -> "heart-line";
-			}
-		);
 	}
 }
 
