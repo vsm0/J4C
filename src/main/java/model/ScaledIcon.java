@@ -8,19 +8,6 @@ import javax.imageio.*;
 
 public class ScaledIcon extends ImageIcon
 {
-	public enum ScaleType
-	{
-		FAST(Image.SCALE_FAST),
-		SMOOTH(Image.SCALE_SMOOTH);
-
-		public final int type;
-
-		private ScaleType(int type)
-		{
-			this.type = type;
-		}
-	};
-
 	private BufferedImage image;
 
 	public ScaledIcon(String path) throws Exception
@@ -41,16 +28,14 @@ public class ScaledIcon extends ImageIcon
 		return getScaled(
 			w,
 			h,
-			ImageScaler.ScaleMode.FIT,
-			ScaleType.FAST
+			ImageScaler.ScaleMode.FIT
 		);
 	}
 
 	public ImageIcon getScaled(
 		int w,
 		int h,
-		ImageScaler.ScaleMode mode,
-		ScaleType type
+		ImageScaler.ScaleMode mode
 	)
 	{
 		var res = ImageScaler.scale(

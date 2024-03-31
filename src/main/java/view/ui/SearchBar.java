@@ -18,7 +18,7 @@ public class SearchBar extends JPanel
 		add(searchField, "growx, push");
 
 		var searchButton = new JButton(
-			new SvgIcon("magnifying-glass")
+			new Svg("magnifying-glass").getIcon()
 		);
 		add(searchButton);
 	}

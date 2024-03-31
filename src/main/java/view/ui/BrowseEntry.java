@@ -7,7 +7,9 @@ import javax.swing.*;
 
 public class BrowseEntry extends JPanel
 {
-	public BrowseEntry(Product p)
+	private Runnable onRefresh;
+
+	public BrowseEntry(Product p, NavMenu nav)
 	{
 		super();
 
@@ -56,21 +58,29 @@ public class BrowseEntry extends JPanel
 			"label, growx, pushx"
 		);
 
-		add(
-			new LikeButton(p)
-		);
+		var likeButton = new LikeButton(p);
+		add(likeButton);
 
 		var addButton = new JButton(
-			new SvgIcon("cart-plus")
+			new Svg("cart-plus").getIcon()
 		);
 		addButton.addActionListener(
 			e -> {
 				Database.addCart(p, 1);
 
-				NavMenu.updateCounter();
+				nav.refresh();
 			}
 		);
 		add(addButton);
+
+		onRefresh = () -> {
+			likeButton.refresh();
+		};
+	}
+
+	public void refresh()
+	{
+		onRefresh.run();
 	}
 }
 

@@ -15,9 +15,9 @@ public class Svg extends JLabel
 	{
 		super();
 
-		var tmp = new FlatSVGIcon(
-			"gfx/svg/" + path + ".svg"
-		);
+		var name = "gfx/svg/" + path + ".svg";
+
+		var tmp = new FlatSVGIcon(name);
 
 		var res = ImageScaler.scale(
 			tmp.getWidth(),
@@ -29,7 +29,7 @@ public class Svg extends JLabel
 
 		setIcon(
 			new FlatSVGIcon(
-				"gfx/svg/" + path + ".svg",
+				name,
 				res.width,
 				res.height
 			)

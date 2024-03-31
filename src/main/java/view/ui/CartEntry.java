@@ -7,6 +7,7 @@ import javax.swing.*;
 
 public class CartEntry extends JPanel
 {
+	private Runnable onRefresh;
 	private JButton trashButton;
 
 	public CartEntry(CartItem item, boolean hasNextEntry)
@@ -44,17 +45,15 @@ public class CartEntry extends JPanel
 			"wrap"
 		);
 
-		add(
-			new LikeButton(
-				Database.getProduct(
-					item.getId()
-				)
-			),
-			"growx, pushx"
+		var likeButton = new LikeButton(
+			Database.getProduct(
+				item.getId()
+			)
 		);
+		add(likeButton, "growx, pushx");
 
 		trashButton = new JButton(
-			new SvgIcon("trash")
+			new Svg("trash").getIcon()
 		);
 		add(trashButton, "wrap");
 
@@ -75,6 +74,15 @@ public class CartEntry extends JPanel
 				new JSeparator(JSeparator.HORIZONTAL),
 				"growx"
 			);
+
+		onRefresh = () -> {
+			likeButton.refresh();
+		};
+	}
+
+	public void refresh()
+	{
+		onRefresh.run();
 	}
 
 	public void listen(Runnable remover)

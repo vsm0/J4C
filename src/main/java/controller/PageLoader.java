@@ -38,12 +38,12 @@ public class PageLoader
 		after.run();
 	}
 
-	public static void start(Container container, MFrame frame, int layer)
+	public static void start(MFrame frame, Page page, int layer)
 	{
-		ContainerRemote.disable(container);
-		frame.setContent(container, layer);
+		ContainerRemote.disable(page);
+		frame.setContent(page, layer);
 		frame.setTitle(
-			frame.getPreferredTitle()
+			page.getTitle()
 		);
 		frame.refresh();
 	}

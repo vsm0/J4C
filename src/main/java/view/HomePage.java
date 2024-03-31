@@ -4,21 +4,23 @@ import model.*;
 import view.ui.*;
 import controller.*;
 import net.miginfocom.swing.*;
+import java.awt.*;
 import javax.swing.*;
 
-public class HomePage extends JPanel
+public class HomePage extends Page
 {
+	private static String title = "Home";
+	private static Runnable onRefresh;
+
 	private HomePage(MFrame frame)
 	{
-		super();
-
-		frame.setPreferredTitle("Home");
+		super(title);
 
 		setLayout(
 			new MigLayout("fill")
 		);
 
-		var header = new NavMenu(frame);
+		var header = new NavMenu(frame, title);
 		add(header, "north, wrap");
 
 		var searchBar = new SearchBar();
@@ -49,17 +51,35 @@ public class HomePage extends JPanel
 		.getInventory()
 		.forEach(
 			(id, product) -> body.add(
-				new BrowseEntry(product),
+				new BrowseEntry(
+					product,
+					header
+				),
 				"growx, wrap"
 			)
 		);
+
+		onRefresh = () -> {
+			header.refresh();
+			for (Component c : body.getComponents())
+				if (c instanceof BrowseEntry)
+					((BrowseEntry) c).refresh();
+		};
+	}
+
+	public void refresh()
+	{
+		onRefresh.run();
 	}
 
 	public static Runnable queue(MFrame frame)
 	{
 		return () -> {
-			var page = new HomePage(frame);
-			PageLoader.start(page, frame, 0);
+			var page = getPage(title);
+			if (page == null)
+				page = new HomePage(frame);
+			setNew(page);
+			PageLoader.start(frame, page, 0);
 		};
 	}
 }

@@ -5,13 +5,13 @@ import controller.*;
 import net.miginfocom.swing.*;
 import javax.swing.*;
 
-public class LoadingPage extends JPanel
+public class LoadingPage extends Page
 {
+	private static String title = "Loading";
+
 	private LoadingPage(MFrame frame)
 	{
-		super();
-
-		frame.setPreferredTitle("Loading");
+		super(title);
 
 		setLayout(
 			new MigLayout("al center center")
@@ -30,7 +30,9 @@ public class LoadingPage extends JPanel
 	{
 		PageLoader.invokeLater(
 			() -> {
-				var page = new LoadingPage(frame);
+				var page = getPage(title);
+				if (page == null)
+					page = new LoadingPage(frame);
 				frame.setContent(page, 2);
 				frame.refresh();
 				frame.display();
@@ -44,10 +46,12 @@ public class LoadingPage extends JPanel
 		);
 	}
 
+	public void refresh()
+	{
+	}
+
 	private static void stop(MFrame frame)
 	{
-		frame.removeContent(2);
-		
 		var c0 = frame.getContent(0);
 		if (c0 != null)
 			ContainerRemote.enable(c0);
@@ -56,6 +60,7 @@ public class LoadingPage extends JPanel
 		if (c1 != null)
 			ContainerRemote.enable(c1);
 
+		frame.removeContent(2);
 		frame.refresh();
 	}
 }

@@ -17,7 +17,7 @@ public class CartNav extends JPanel
 		);
 
 		var backButton = new JButton(
-			new SvgIcon("arrow-left")
+			new Svg("arrow-left").getIcon()
 		);
 		backButton.addActionListener(
 			e -> LoadingPage.queue(
@@ -28,7 +28,7 @@ public class CartNav extends JPanel
 		add(backButton, "push");
 
 		var clearButton = new JButton(
-			new SvgIcon("trash")
+			new Svg("trash").getIcon()
 		);
 		clearButton.addActionListener(
 			e -> remover.run()

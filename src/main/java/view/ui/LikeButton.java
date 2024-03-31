@@ -6,39 +6,46 @@ import javax.swing.*;
 
 public class LikeButton extends JButton
 {
+	private Runnable onRefresh;
+
 	public LikeButton(Product p)
 	{
 		super();
 
-		setIcon(
-                        getSvgIcon(
-                                p.getLikeStatus()
-                        )
-                );
-
                 addActionListener(
-                        e -> {
-                                var status = p
-                                        .getLikeStatus()
-                                        .equals("yes") ? "no" : "yes";
-                                p.setLikeStatus(status);
+			e -> {
+				p.setLikeStatus(
+					p
+					.getLikeStatus()
+					.equals("yes") ? "no" : "yes"
+				);
+				refresh();
+			}
+		);
 
-                                setIcon(
-                                        getSvgIcon(status)
-                                );
-                        }
-                );
+		onRefresh = () -> setIcon(
+			getIcon(
+				p.getLikeStatus()
+			)
+		);
+
+		refresh();
 	}
 
-	private SvgIcon getSvgIcon(String status)
+	public void refresh()
+	{
+		onRefresh.run();
+	}
+
+	private Icon getIcon(String status)
         {
-                return new SvgIcon(
+                return new Svg(
                         switch (status)
                         {
                                 case "yes" -> "heart";
                                 default -> "heart-line";
                         }
-                );
+                ).getIcon();
         }
 }
 

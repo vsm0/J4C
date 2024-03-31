@@ -8,9 +8,10 @@ import javax.swing.*;
 
 public class NavMenu extends JPanel
 {
+	private Runnable onRefresh;
 	private static JButton cartButton;
 
-	public NavMenu(MFrame frame)
+	public NavMenu(MFrame frame, String title)
 	{
 		super();
 
@@ -18,8 +19,15 @@ public class NavMenu extends JPanel
 			new MigLayout("fill")
 		);
 		
+		var isNav = title.equals("Nav");
+		var runner = queue(frame, isNav);
 		var menuButton = new JButton(
-			new SvgIcon("bars")
+			new Svg(
+				isNav ? "xmark" : "bars"
+			).getIcon()
+		);
+		menuButton.addActionListener(
+			e -> LoadingPage.queue(frame, runner)
 		);
 		add(menuButton);
 
@@ -29,20 +37,22 @@ public class NavMenu extends JPanel
 		);
 		add(logoLabel, "push");
 
-		var isCart = frame
-			.getPreferredTitle()
-			.equals("Cart");
+		var isCart = title.equals("Cart");
 
-		var loginButton = new JButton(
-			new SvgIcon("user")
-		);
-		add(loginButton, isCart ? "wrap" : "");
-
-		if (!isCart)
+		if (isCart || isNav)
 		{
+			onRefresh = () -> {};
+		}
+		else
+		{
+			var loginButton = new JButton(
+				new Svg("user").getIcon()
+			);
+			add(loginButton, isCart ? "wrap" : "");
+
 			// TODO: dynamic cart item count
 			cartButton = new JButton(
-				new SvgIcon("cart-shopping")
+				new Svg("cart-shopping").getIcon()
 			);
 			updateCounter();
 			cartButton.addActionListener(
@@ -52,10 +62,16 @@ public class NavMenu extends JPanel
 				)
 			);
 			add(cartButton, "wrap");
+			onRefresh = () -> updateCounter();
 		}
 	}
 
-	public static void updateCounter()
+	public void refresh()
+	{
+		onRefresh.run();
+	}
+
+	private void updateCounter()
 	{
 		cartButton.setText(
 			String.valueOf(
@@ -66,5 +82,15 @@ public class NavMenu extends JPanel
 		);
 		cartButton.revalidate();
 		cartButton.repaint();
+	}
+
+	private Runnable queue(MFrame frame, boolean isNav)
+	{
+		return isNav ?
+			() -> {
+				var page = LoadingPage.getOld();
+				PageLoader.start(frame, page, 0);
+			}
+			: NavPage.queue(frame);
 	}
 }

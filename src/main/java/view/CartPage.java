@@ -4,25 +4,25 @@ import model.*;
 import view.ui.*;
 import controller.*;
 import net.miginfocom.swing.*;
+import java.awt.*;
 import javax.swing.*;
 
-public class CartPage extends JPanel
+public class CartPage extends Page
 {
-	private JLabel priceLabel;
+	private static String title = "Cart";
+	private static Runnable onRefresh;
 	private int itemIndex;
-	private ScrollPanel body;
+	private JPanel body;
 
 	private CartPage(MFrame frame)
 	{
-		super();
-
-		frame.setPreferredTitle("Cart");
+		super(title);
 
 		setLayout(
 			new MigLayout("fill")
 		);
 
-		var header = new NavMenu(frame);
+		var header = new NavMenu(frame, title);
 		add(header, "north, wrap");
 
 		var subhead = new CartNav(
@@ -82,35 +82,43 @@ public class CartPage extends JPanel
 			"grow"
 		);
 
-		priceLabel = new JLabel();
-		refreshPrice();
+		var priceLabel = new JLabel();
 		side.add(priceLabel, "wrap");
 
 		side.add(
 			new JButton("Checkout")
 		);
+
+		onRefresh = () -> {
+			priceLabel.setText(
+				"Total Price: $"
+				+ Database
+				.getCart()
+				.getTotal()
+			);
+
+			for (Component c : body.getComponents())
+				if (c instanceof CartEntry)
+					((CartEntry) c).refresh();
+
+			body.revalidate();
+			body.repaint();
+		};
 	}
 
-	private void refresh()
+	public void refresh()
 	{
-		refreshPrice();
-
-		revalidate();
-		repaint();
-	}
-
-	private void refreshPrice()
-	{
-		priceLabel.setText(
-			"Total Price: $" + Database.getCart().getTotal()
-		);
+		onRefresh.run();
 	}
 
 	public static Runnable queue(MFrame frame)
 	{
 		return () -> {
-			var page = new CartPage(frame);
-			PageLoader.start(page, frame, 0);
+			var page = getPage(title);
+			if (page == null)
+				page = new CartPage(frame);
+			setNew(page);
+			PageLoader.start(frame, page, 0);
 		};
 	}
 }

@@ -23,7 +23,7 @@ public class ImageScaler
 			&& srcH > 0
 			&& viewW > 0
 			&& viewH > 0
-			: "Dimensions cannot be < 0!";
+			: "Dimensions cannot be <= 0!";
 
 		var width = (double) srcW;
 		var height = (double) srcH;
