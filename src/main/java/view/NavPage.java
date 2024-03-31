@@ -16,24 +16,33 @@ public class NavPage extends Page
 		super(title);
 
 		setLayout(
-			new MigLayout("fill")
+			new MigLayout("fill, align center center")
 		);
 
 		var header = new NavMenu(frame, title);
 		add(header, "north, wrap");
 
-		var trackerButton = new JButton("Tracker");
-		trackerButton.addActionListener(
-			e -> LoadingPage.queue(
-				frame,
-				TrackerPage.queue(frame)
-			)
-		);
-		add(trackerButton);
+		addNav(frame, "Home", HomePage.queue(frame));
+		addNav(frame, "Cart", CartPage.queue(frame));
+		addNav(frame, "Tracker", TrackerPage.queue(frame));
+		addNav(frame, "Account", () -> {});
+		addNav(frame, "Settings", () -> {});
+		//if logged in: addNav(frame, "Sign out", () -> {});
 
 		onRefresh = () -> {
 			header.refresh();
 		};
+	}
+	
+	private void addNav(MFrame frame, String title, Runnable nextPage)
+	{
+		var button = new JButton(title);
+		button.addActionListener(
+			e -> LoadingPage.queue(frame, nextPage)
+		);
+		var wrapper = new JPanel();
+		wrapper.add(button);
+		add(wrapper, "growx, wrap");
 	}
 
 	public void refresh()

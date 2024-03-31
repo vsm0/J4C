@@ -3,9 +3,8 @@ package view;
 import model.*;
 import view.ui.*;
 import controller.*;
-import java.awt.*;
+import net.miginfocom.swing.*;
 import javax.swing.*;
-import javax.swing.table.*;
 
 public class TrackerPage extends Page
 {
@@ -16,40 +15,55 @@ public class TrackerPage extends Page
 		super(title);
 
 		setLayout(
-			new GridLayout(1, 2)
+			new MigLayout("fill")
 		);
 
-		// Left section: List of packages sorted by delivery time
-		var packageListScrollPane = new JScrollPane();
-//		JTable packageListTable = new JTable(); // You can use a custom TableModel to sort the packages by delivery time
-		var packageListTable = new JPanel();
-		packageListScrollPane.setViewportView(packageListTable);
-		add(packageListScrollPane);
+		var header = new NavMenu(frame, title);
+		add(header, "north");
 
-		packageListTable.setLayout(
-			new BoxLayout(
-				packageListTable,
-				BoxLayout.Y_AXIS
-			)
-		);
+		var tabPane = new JTabbedPane();
+		add(tabPane, "grow");
+
+		var pendingList = new JPanel();
+		pendingList.setLayout(new MigLayout("fill"));
 		for (int i = 0; i < 20; i++)
-			packageListTable.add(
-				new PackageEntry()
+			pendingList.add(
+			//	new PendingPackageEntry(),
+				new PackageEntry(),
+				"growx, wrap"
 			);
+		tabPane.addTab("Pending", new JScrollPane(pendingList));
 
-		// Right section: Info side panel
-		var infoSidePanel = new JPanel();
-		infoSidePanel.setLayout(new BorderLayout());
+		var readyList = new JPanel();
+		readyList.setLayout(
+			new MigLayout("fill")
+		);
+		for (int i = 0; i < 8; i++)
+			readyList.add(
+			//	new ReadyPackageEntry(),
+				new PackageEntry(),
+				"growx, wrap"
+			);
+		tabPane.addTab("Arrived", new JScrollPane(readyList));
 
-		// Add labels and text fields to display package details (e.g. items, price, address)
-		var itemLabel = new JLabel("Package Info:");
-		itemLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		infoSidePanel.add(itemLabel, BorderLayout.PAGE_START);
+		var completeList = new JPanel();
+		completeList.setLayout(
+			new MigLayout("fill")
+		);
+		for (int i = 0; i < 10; i++)
+			completeList.add(
+			//	new CompletePackageEntry(),
+				new PackageEntry(),
+				"growx, wrap"
+			);
+		tabPane.addTab("Completed", new JScrollPane(completeList));
 
-		var meta = new PackageMetadata();
-		infoSidePanel.add(meta);
+		var infoPanel = new JPanel();
+		add(infoPanel, "east");
 
-		add(infoSidePanel);
+		infoPanel.add(
+			new JLabel("Click an item to learn more...")
+		);
 	}
 
 	public void refresh()
