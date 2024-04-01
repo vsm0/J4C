@@ -8,6 +8,7 @@ public class PackageEntry extends JPanel
 	public PackageEntry()
 	{
 		super();
+		/*
 		setLayout(new GridBagLayout());
 		var constraints = new GridBagConstraints();
 
@@ -76,6 +77,7 @@ constraints.gridx = 0;
 constraints.gridy = 4;
 constraints.gridwidth = 2;
 add(countdownBar, constraints);
+*/
 	}
 }
 

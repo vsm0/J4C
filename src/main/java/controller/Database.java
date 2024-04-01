@@ -7,21 +7,28 @@ public class Database
 {
 	private static Cart cart;
 	private static Inventory inventory;
+	private static Tracker tracker;
 	private static boolean saveCart;
 	private static boolean saveInventory;
+	private static boolean saveTracker;
 
 	public Database()
 	{
 		saveCart = true;
 		saveInventory = true;
+		saveTracker = true;
 
 		cart = new Cart(
 			loadList("cart", CartItem.class)
 		);
 
-		var pList = loadList("inventory", Product.class);
+		inventory = new Inventory(
+			loadList("inventory", Product.class)
+		);
 
-		inventory = new Inventory(pList);
+		tracker = new Tracker(
+			loadList("tracker", Package.class)
+		);
 	}
 
 	private static <T> List<T> loadList(String filename, Class<T> type)
@@ -72,6 +79,11 @@ public class Database
 	public static Inventory getInventory()
 	{
 		return inventory;
+	}
+
+	public static Tracker getTracker()
+	{
+		return tracker;
 	}
 
 	public static Product getProduct(String id)
@@ -125,6 +137,9 @@ public class Database
 
 		if (saveInventory)
 			saveList("inventory", inventory, Product.class);
+
+		if (saveTracker)
+			saveList("tracker", tracker, Tracker.class);
 
 		saveCart = false;
 		saveInventory = false;
