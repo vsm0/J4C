@@ -27,8 +27,11 @@ public class Database
 		);
 
 		tracker = new Tracker(
-			loadList("tracker", Package.class)
+			loadList("tracker", Delivery.class)
 		);
+
+		var t = tracker.get("i");
+		tracker.put(t.getId(), t);
 	}
 
 	private static <T> List<T> loadList(String filename, Class<T> type)
@@ -139,7 +142,7 @@ public class Database
 			saveList("inventory", inventory, Product.class);
 
 		if (saveTracker)
-			saveList("tracker", tracker, Tracker.class);
+			saveList("tracker", tracker, Delivery.class);
 
 		saveCart = false;
 		saveInventory = false;

@@ -3,20 +3,20 @@ package controller;
 import model.*;
 import java.util.*;
 
-public class Tracker extends HashMap<String, Package>
+public class Tracker extends HashMap<String, Delivery>
 {
-	public Tracker(List<Tracker> list)
+	public Tracker(List<Delivery> list)
 	{
 		super();
 
-		for (Package p : list)
-			put(p.getId(), p);
+		for (Delivery d : list)
+			put(d.getId(), d);
 	}
 
-	public Package get(String id)
+	public Delivery get(String id)
 	{
-		var p = super.get(id);
+		var d = super.get(id);
 
-		return (p == null) ? new Package(id) : p;
+		return (d == null) ? new Delivery() : d;
 	}
 }

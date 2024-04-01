@@ -1,6 +1,6 @@
 package model;
 
-public class Package
+public class Delivery
 {
 	private String id;
 	private String items;
@@ -28,7 +28,7 @@ public class Package
 		}
 	}
 
-	public Package(
+	public Delivery(
 		String id,
 		String items,
 		String address,
@@ -41,13 +41,13 @@ public class Package
 		this.id = id;
 		this.items = items;
 		this.address = address;
-		this.receiver = reciever;
+		this.receiver = receiver;
 		this.status = status.getStatus();
 		this.timeCreated = String.valueOf(timeCreated);
 		this.shipDuration = String.valueOf(shipDuration);
 	}
 
-	public Package()
+	public Delivery()
 	{
 		this(
 			"Id",
@@ -109,8 +109,18 @@ public class Package
 		return (double) diff / dur;
 	}
 
+	public boolean isInTransit()
+	{
+		return status == Status.TRANSIT.getStatus();
+	}
+
 	public boolean isDelivered()
 	{
 		return status == Status.DELIVERED.getStatus();
+	}
+	
+	public boolean isReceived()
+	{
+		return status == Status.RECEIVED.getStatus();
 	}
 }

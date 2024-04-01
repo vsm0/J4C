@@ -24,39 +24,48 @@ public class TrackerPage extends Page
 		var tabPane = new JTabbedPane();
 		add(tabPane, "grow");
 
-		var pendingList = new JPanel();
-		pendingList.setLayout(new MigLayout("fill"));
-		for (int i = 0; i < 20; i++)
-			pendingList.add(
-			//	new PendingPackageEntry(),
-				new PackageEntry(),
-				"growx, wrap"
-			);
-		tabPane.addTab("Pending", new JScrollPane(pendingList));
+		var transitList = new JPanel();
+		transitList.setLayout(new MigLayout("fill"));
+		Database.getTracker().forEach(
+			(id, item) -> {
+				if (item.isInTransit())
+					transitList.add(
+						new TransitOrder(item),
+						"growx, wrap"
+					);
+			}
+		);
+		tabPane.addTab("In-Transit", new JScrollPane(transitList));
 
-		var readyList = new JPanel();
-		readyList.setLayout(
+		var deliveredList = new JPanel();
+		deliveredList.setLayout(
 			new MigLayout("fill")
 		);
-		for (int i = 0; i < 8; i++)
-			readyList.add(
-			//	new ReadyPackageEntry(),
-				new PackageEntry(),
-				"growx, wrap"
-			);
-		tabPane.addTab("Arrived", new JScrollPane(readyList));
+		Database.getTracker().forEach(
+			(id, item) -> {
+				if (item.isDelivered())
+					deliveredList.add(
+						new DeliveredOrder(item),
+						"growx, wrap"
+					);
+			}
+		);
+		tabPane.addTab("Delivered", new JScrollPane(deliveredList));
 
-		var completeList = new JPanel();
-		completeList.setLayout(
+		var receivedList = new JPanel();
+		receivedList.setLayout(
 			new MigLayout("fill")
 		);
-		for (int i = 0; i < 10; i++)
-			completeList.add(
-			//	new CompletePackageEntry(),
-				new PackageEntry(),
-				"growx, wrap"
-			);
-		tabPane.addTab("Completed", new JScrollPane(completeList));
+		Database.getTracker().forEach(
+			(id, item) -> {
+				if (item.isReceived())
+					receivedList.add(
+						new ReceivedOrder(item),
+						"growx, wrap"
+					);
+			}
+		);
+		tabPane.addTab("Received", new JScrollPane(receivedList));
 
 		var infoPanel = new JPanel();
 		add(infoPanel, "east");
