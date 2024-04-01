@@ -7,7 +7,7 @@ public abstract class Page extends JPanel
 {
 	private String title;
 	private static Map<String, Page> cache = new HashMap<>();
-	private static Page oldPage, newPage;
+	private static Page oldPage;
 
 	public Page(String title)
 	{
@@ -26,14 +26,9 @@ public abstract class Page extends JPanel
 		return oldPage;
 	}
 
-	public static void setNew(Page page)
+	public static void setOld(Page page)
 	{
-		if (newPage == null)
-			newPage = page;
-
-		oldPage = newPage;
-		newPage = page;
-		System.out.println(oldPage.getTitle());
+		oldPage = page;
 	}
 
 	public static Page getPage(String title)

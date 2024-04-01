@@ -78,7 +78,7 @@ public class HomePage extends Page
 			var page = getPage(title);
 			if (page == null)
 				page = new HomePage(frame);
-			setNew(page);
+			setOld(page);
 			PageLoader.start(frame, page, 0);
 		};
 	}

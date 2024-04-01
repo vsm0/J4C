@@ -76,7 +76,7 @@ public class TrackerPage extends Page
 			var page = getPage(title);
 			if (page == null)
 				page = new TrackerPage(frame);
-			setNew(page);
+			setOld(page);
 			PageLoader.start(frame, page, 0);
 		};
 	}
