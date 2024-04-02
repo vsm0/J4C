@@ -91,10 +91,10 @@ public class CartPage extends Page
 		var checkBtn = new JButton("Checkout");
 		checkBtn.addActionListener(
 			e -> {
-				if (cart.size() == 0)
+				if (cart.getSize() == 0)
 					return;
 				var uid = UUID.randomUUID().toString().substring(0, 10);
-				items = "";
+				items = "\n";
 				cart.forEach(
 					(id, item) -> {
 						items += item.getName() + "\n";
@@ -133,7 +133,9 @@ public class CartPage extends Page
 					);
 				}
 
-				cart.clear();
+				Database.clearCart();
+				body.removeAll();
+				refresh();
 				LoadingPage.queue(
 					frame,
 					HomePage.queue(frame)
