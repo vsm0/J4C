@@ -21,7 +21,7 @@
     "specs": "specs",
     "vendor": "Bughard inc.",
     "category": "laptop",
-    "likeStatus": "no",
+    "likeStatus": "yes",
     "oldPrice": "630.0",
     "newPrice": "600.0",
     "sale": "5",

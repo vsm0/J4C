@@ -105,7 +105,7 @@ public class CartPage extends Page
 				var user = "Guest #" + UUID.randomUUID().toString().substring(0, 10);
 				var status = Delivery.Status.TRANSIT;
 				var time = System.currentTimeMillis();
-				var duration = 30 * 1000;
+				var duration = 60 * 1000;
 				var tracker = Database.getTracker();
 				tracker.put(
 					uid,
@@ -158,6 +158,8 @@ public class CartPage extends Page
 
 			body.revalidate();
 			body.repaint();
+			side.revalidate();
+			side.repaint();
 		};
 	}
 

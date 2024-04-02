@@ -32,11 +32,11 @@ public class TransitOrder extends Order
 			var dur = order.getShipDuration();
 			var prog = ms == 0 ?
 				1.0 :
-				dur - ((double) ms / dur);
+				1 - ((double) ms / dur);
 
 			timeLabel.setText(str);
 			progress.setValue(((int) (prog * 100)));
-			if (progress.getValue() == 100)
+			if (ms == 0)
 			{
 				page.transitList.remove(this);
 				page.deliveredList.add(

@@ -75,6 +75,7 @@ public class BrowseEntry extends JPanel
 
 		onRefresh = () -> {
 			likeButton.refresh();
+			nav.refresh();
 		};
 	}
 
