@@ -4,6 +4,7 @@ public class Delivery
 {
 	private String id;
 	private String items;
+	private String price;
 	private String address;
 	private String receiver;
 	private String status;
@@ -31,6 +32,7 @@ public class Delivery
 	public Delivery(
 		String id,
 		String items,
+		double price,
 		String address,
 		String receiver,
 		Status status,
@@ -40,6 +42,7 @@ public class Delivery
 	{
 		this.id = id;
 		this.items = items;
+		this.price = String.valueOf(price);
 		this.address = address;
 		this.receiver = receiver;
 		this.status = status.getStatus();
@@ -52,11 +55,12 @@ public class Delivery
 		this(
 			"Id",
 			"item1\nitem2\nitem3",
+			1200.45,
 			"1408 Dolphin Hotel",
 			"John Cosmack",
 			Status.TRANSIT,
 			System.currentTimeMillis(),
-			10000
+			1000 * 60 * 60
 		);
 	}
 
@@ -68,6 +72,11 @@ public class Delivery
 	public String getItems()
 	{
 		return items;
+	}
+
+	public Double getPrice()
+	{
+		return Double.valueOf(price);
 	}
 
 	public String getAddress()
@@ -87,40 +96,36 @@ public class Delivery
 
 	public long getTimeCreated()
 	{
-		return Long.valueOf(timeCreated);
+		return Long.parseLong(timeCreated);
 	}
 
 	public long getShipDuration()
 	{
-		return Long.valueOf(shipDuration);
+		return Long.parseLong(shipDuration);
 	}
 
-	public double getCompletionRatio()
+	public long getTimeLeft()
 	{
 		var cur = System.currentTimeMillis();
 		var old = getTimeCreated();
 		var dur = getShipDuration();
-		var diff = cur - old;
-		if (diff > dur)
-		{
-			status = Status.DELIVERED.getStatus();
-			return 1.0;
-		}
-		return (double) diff / dur;
+		return cur > old + dur ?
+			0 :
+			old + dur - cur;
 	}
 
 	public boolean isInTransit()
 	{
-		return status == Status.TRANSIT.getStatus();
+		return status.equals(Status.TRANSIT.getStatus());
 	}
 
 	public boolean isDelivered()
 	{
-		return status == Status.DELIVERED.getStatus();
+		return status.equals(Status.DELIVERED.getStatus());
 	}
 	
 	public boolean isReceived()
 	{
-		return status == Status.RECEIVED.getStatus();
+		return status.equals(Status.RECEIVED.getStatus());
 	}
 }

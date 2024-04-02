@@ -13,6 +13,7 @@ public class CartPage extends Page
 	private static Runnable onRefresh;
 	private int itemIndex;
 	private JPanel body;
+	public static Page backPage;
 
 	private CartPage(MFrame frame)
 	{
@@ -117,6 +118,7 @@ public class CartPage extends Page
 			var page = getPage(title);
 			if (page == null)
 				page = new CartPage(frame);
+			backPage = getOld();
 			setOld(page);
 			PageLoader.start(frame, page, 0);
 		};

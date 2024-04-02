@@ -22,7 +22,7 @@ public class CartNav extends JPanel
 		backButton.addActionListener(
 			e -> LoadingPage.queue(
 				frame,
-				HomePage.queue(frame)
+				() -> PageLoader.start(frame, CartPage.backPage, 0)
 			)
 		);
 		add(backButton, "push");

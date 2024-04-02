@@ -30,8 +30,7 @@ public class Database
 			loadList("tracker", Delivery.class)
 		);
 
-		var t = tracker.get("i");
-		tracker.put(t.getId(), t);
+	//	tracker.put("Id", tracker.get(""));
 	}
 
 	private static <T> List<T> loadList(String filename, Class<T> type)
