@@ -4,6 +4,7 @@ import model.*;
 import view.ui.*;
 import controller.*;
 import net.miginfocom.swing.*;
+import java.util.*;
 import java.awt.*;
 import javax.swing.*;
 
@@ -13,6 +14,7 @@ public class CartPage extends Page
 	private static Runnable onRefresh;
 	private int itemIndex;
 	private JPanel body;
+	private String items;
 	public static Page backPage;
 
 	private CartPage(MFrame frame)
@@ -86,9 +88,59 @@ public class CartPage extends Page
 		var priceLabel = new JLabel();
 		side.add(priceLabel, "wrap");
 
-		side.add(
-			new JButton("Checkout")
+		var checkBtn = new JButton("Checkout");
+		checkBtn.addActionListener(
+			e -> {
+				if (cart.size() == 0)
+					return;
+				var uid = UUID.randomUUID().toString().substring(0, 10);
+				items = "";
+				cart.forEach(
+					(id, item) -> {
+						items += item.getName() + "\n";
+					}
+				);
+				var price = cart.getTotal();
+				var address = "Dolphin Hotel #1408";
+				var user = "Guest #" + UUID.randomUUID().toString().substring(0, 10);
+				var status = Delivery.Status.TRANSIT;
+				var time = System.currentTimeMillis();
+				var duration = 30 * 1000;
+				var tracker = Database.getTracker();
+				tracker.put(
+					uid,
+					new Delivery(
+						uid,
+						items,
+						price,
+						address,
+						user,
+						status,
+						time,
+						duration
+					)
+				);
+				var tp = LoadingPage.getPage("Tracker");
+				if (tp != null)
+				{
+					var t = TrackerPage.ctx;
+					t.transitList.add(
+						new TransitOrder(
+							tracker.get(uid),
+							t
+						),
+						"growx, wrap"
+					);
+				}
+
+				cart.clear();
+				LoadingPage.queue(
+					frame,
+					HomePage.queue(frame)
+				);
+			}
 		);
+		side.add(checkBtn, "growx");
 
 		onRefresh = () -> {
 			priceLabel.setText(

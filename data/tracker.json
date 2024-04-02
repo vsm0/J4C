@@ -1,1 +1,12 @@
-
+[
+  {
+    "id": "070d89a7-a",
+    "items": "Cherry Whopper\nBighard Doors 001\n",
+    "price": "5200.0",
+    "address": "Dolphin Hotel #1408",
+    "receiver": "Guest #1a0bdc60-b",
+    "status": "in transit",
+    "timeCreated": "1712034715685",
+    "shipDuration": "30000"
+  }
+]

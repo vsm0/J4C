@@ -1,5 +1,7 @@
 package model;
 
+import java.util.*;
+
 public class Delivery
 {
 	private String id;
@@ -10,6 +12,7 @@ public class Delivery
 	private String status;
 	private String timeCreated;
 	private String shipDuration;
+	private String dateReceived;
 
 	public enum Status {
 		TRANSIT("in transit"),
@@ -92,6 +95,20 @@ public class Delivery
 	public String getStatus()
 	{
 		return status;
+	}
+
+	public String getDate()
+	{
+		return dateReceived == null ?
+			"Unavailable: Not received yet" :
+			dateReceived;
+	}
+
+	public void lockDate()
+	{
+		var cur = System.currentTimeMillis();
+		dateReceived = String.valueOf(new Date(cur));
+		status = Status.RECEIVED.getStatus();
 	}
 
 	public long getTimeCreated()

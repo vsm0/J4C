@@ -10,11 +10,14 @@ import javax.swing.*;
 public class TrackerPage extends Page
 {
 	private static String title = "Tracker";
-	public JPanel transitList, deliveredList, receivedList;
+	public JPanel transitList, deliveredList, receivedList, infoPanel;
 	public Timer timer;
+	public static TrackerPage ctx;
+	private Runnable onRefresh;
 	public TrackerPage(MFrame frame)
 	{
 		super(title);
+		ctx = this;
 
 		setLayout(
 			new MigLayout("fill")
@@ -62,34 +65,45 @@ public class TrackerPage extends Page
 			(id, item) -> {
 				if (item.isReceived())
 					receivedList.add(
-						new ReceivedOrder(item),
+						new ReceivedOrder(item, this),
 						"growx, wrap"
 					);
 			}
 		);
 		tabPane.addTab("Received", new JScrollPane(receivedList));
 
-		var infoPanel = new JPanel();
+		infoPanel = new JPanel();
 		add(infoPanel, "east");
 
 		infoPanel.add(
 			new JLabel("Click an item to learn more...")
 		);
 
-		timer = new Timer(500, e -> refresh());
+		timer = new Timer(500, e -> sync());
 		timer.start();
+
+		onRefresh = () -> {
+			header.refresh();
+		};
 	}
 
-	public void refresh()
+	private void sync()
 	{
 		for (Component c : transitList.getComponents())
 			if (c instanceof Order)
 				((Order) c).refresh();
 		transitList.revalidate();
 		transitList.repaint();
+		receivedList.revalidate();
+		receivedList.repaint();
 		deliveredList.revalidate();
 		deliveredList.repaint();
-		timer.restart();
+	}
+
+	public void refresh()
+	{
+		sync();
+		onRefresh.run();
 	}
 
 	public static Runnable queue(MFrame frame)

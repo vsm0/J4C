@@ -11,7 +11,7 @@ public class TransitOrder extends Order
 	private static Runnable onRefresh;
 	public TransitOrder(Delivery d, TrackerPage page)
 	{
-		super(d);
+		super(d, page);
 
 		var timeLabel = new JLabel("--:--:--", JLabel.RIGHT);
 		add(timeLabel, "growx, label");
@@ -28,17 +28,15 @@ public class TransitOrder extends Order
 			var hrs = mins / 60;
 			secs %= 60;
 			mins %= 60;
-		//	System.out.println(
-	//	var str=		ms + " -> " + hrs + ":" + mins + ":" + secs;
-		//	);
 			var str = String.format("%02d:%02d:%02d", hrs, mins, secs);
+			var dur = order.getShipDuration();
 			var prog = ms == 0 ?
 				1.0 :
-				(double) ms / order.getShipDuration();
+				dur - ((double) ms / dur);
 
 			timeLabel.setText(str);
 			progress.setValue(((int) (prog * 100)));
-			if (order.isDelivered())
+			if (progress.getValue() == 100)
 			{
 				page.transitList.remove(this);
 				page.deliveredList.add(
@@ -47,11 +45,6 @@ public class TransitOrder extends Order
 				);
 			}
 		};
-
-		listen(
-			() -> {
-			}
-		);
 	}
 
 	public void refresh()
