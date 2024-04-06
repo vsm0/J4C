@@ -13,6 +13,16 @@ public class Main extends MFrame
 
 		new Database();
 
+		Runtime.getRuntime().addShutdownHook(
+			new Thread()
+			{
+				public void run()
+				{
+					Database.save();
+				}
+			}
+		);
+
 		LoadingPage.queue(
 			this,
 			HomePage.queue(this)

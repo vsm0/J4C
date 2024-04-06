@@ -1,1 +1,24 @@
-
+[
+  {
+    "id": "38909593-b",
+    "items": "\nBighard Doors 001\n",
+    "price": "3000.0",
+    "address": "Dolphin Hotel #1408",
+    "receiver": "Guest #4876e7bd-7",
+    "status": "received",
+    "timeCreated": "1712038206853",
+    "shipDuration": "60000",
+    "dateReceived": "Sat Apr 06 22:28:16 GMT 2024"
+  },
+  {
+    "id": "0a5b2218-8",
+    "items": "\nCherry Whopper\n",
+    "price": "2800.0",
+    "address": "Dolphin Hotel #1408",
+    "receiver": "Guest #a889ca66-7",
+    "status": "received",
+    "timeCreated": "1712037763785",
+    "shipDuration": "60000",
+    "dateReceived": "Tue Apr 02 06:03:43 GMT 2024"
+  }
+]

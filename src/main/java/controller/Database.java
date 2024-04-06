@@ -8,16 +8,9 @@ public class Database
 	private static Cart cart;
 	private static Inventory inventory;
 	private static Tracker tracker;
-	private static boolean saveCart;
-	private static boolean saveInventory;
-	private static boolean saveTracker;
 
 	public Database()
 	{
-		saveCart = true;
-		saveInventory = true;
-		saveTracker = true;
-
 		cart = new Cart(
 			loadList("cart", CartItem.class)
 		);
@@ -29,8 +22,6 @@ public class Database
 		tracker = new Tracker(
 			loadList("tracker", Delivery.class)
 		);
-
-	//	tracker.put("Id", tracker.get(""));
 	}
 
 	private static <T> List<T> loadList(String filename, Class<T> type)
@@ -113,9 +104,6 @@ public class Database
 			return;
 
 		p.updateStock(-amount);
-
-		saveCart = true;
-		saveInventory = true;
 	}
 
 	public static void clearCart()
@@ -127,24 +115,13 @@ public class Database
 		);
 
 		cart.clear();
-
-		saveCart = true;
-		saveInventory = true;
 	}
 
 	public static void save()
 	{
-		if (saveCart)
-			saveList("cart", cart, CartItem.class);
-
-		if (saveInventory)
-			saveList("inventory", inventory, Product.class);
-
-		if (saveTracker)
-			saveList("tracker", tracker, Delivery.class);
-
-		saveCart = false;
-		saveInventory = false;
+		saveList("cart", cart, CartItem.class);
+		saveList("inventory", inventory, Product.class);
+		saveList("tracker", tracker, Delivery.class);
 	}
 }
 
